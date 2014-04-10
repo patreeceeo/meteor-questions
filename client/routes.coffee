@@ -5,7 +5,7 @@ Router.map ->
   @route 'index',
     path: '/'
   @route 'questionPosed',
-    path: 'questions/:_idList/posed/:_idQuestionPosed'
+    path: 'questions/:_idList/posed'
     action: ->
       @render()
 

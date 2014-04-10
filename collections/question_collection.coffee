@@ -1,2 +1,2 @@
 
-this.QuestionCollection = new Meteor.Collection 'QuestionCollection'
+this.Question.Collection = new Meteor.Collection 'QuestionCollection'
