@@ -3,7 +3,8 @@
   "dependencies": {
     "basePackages": {
       "handlebar-helpers": {},
-      "iron-router": {}
+      "iron-router": {},
+      "bview": {}
     },
     "packages": {
       "handlebar-helpers": {
@@ -15,6 +16,11 @@
         "git": "https://github.com/EventedMind/iron-router.git",
         "tag": "v0.7.0",
         "commit": "05f34bc48c4cad9fdaa366c1ddcabe6980232ece"
+      },
+      "bview": {
+        "git": "https://github.com/pzatrick/meteor-bview.git",
+        "tag": "v0.0.34",
+        "commit": "52f09f2a218f6c6947fe9132a69042f6145e0d3a"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",

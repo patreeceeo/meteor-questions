@@ -1,13 +1,16 @@
 
 
 <template name='questionPosed'>
+  <div class='QuestionPosed'>
+    <p>{{question}}</p>
+    <!-- idea: use randomized coaching messages for placeholder -->
+    <textarea class='QuestionPosed-textarea' placeholder="Your Answer"></textarea>
+  </div>
+</template>
+
+<template name='questionAnswered'>
   {{#each questionAnswered}}
     <p>{{question}}</p>
     <p>{{answer}}</p>
-  {{/each}}
-  {{#each questionPosed}}
-    <p>{{question}}</p>
-    <!-- idea: use randomized coaching messages for placeholder -->
-    <textarea data-id-question='{{_id}}' placeholder="Your Answer"></textarea>
   {{/each}}
 </template>
