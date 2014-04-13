@@ -19,7 +19,7 @@
 #     App.QuestionCollection.find()
 
 
-class QuestionPosedView extends View
+class App.QuestionPosedView extends View
   template: Template.questionPosed
   events:
     answerQuestion:
@@ -43,12 +43,24 @@ class QuestionPosedView extends View
       callback: (event) ->
         @answerModel.remove()
 
+    nextQuestion:
+      event: 'click'
+      block: 'QuestionPosed'
+      element: 'nextButton'
+      callback: (event) ->
+        Router.go 'questionPosed',
+          _idList: 0
+          _idQuestion: @options._idQuestion + 1
+
   dataHelpers:
     answer: ->
+      @dep.depend()
       @answerModel.get 'answer'
 
     question: ->
+      @dep.depend()
       @questionModel.get 'question'
+
 
     answerPlaceholder: ->
       [
@@ -59,16 +71,19 @@ class QuestionPosedView extends View
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
+  initialize: (@options = {}) ->
+    # @options._idList ?= 0
+    # @options._idQuestion ?= 0
+    @dep = new Deps.Dependency
+    @load(@options)
 
-  initialize: ->
-    @questionModel = new App.QuestionModel '0'
-    @questionModel.insert()
-    @answerModel = new App.AnswerModel '0'
-    @answerModel.insert _idQuestion: '0'
+  load: (@options) ->
+    @questionModel = new App.QuestionModel options._idQuestion
+    @answerModel = new App.AnswerModel options._idQuestion
+    @dep.changed()
       
 
 Meteor.startup ->
-  new QuestionPosedView
 
 
 

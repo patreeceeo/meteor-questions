@@ -2,13 +2,18 @@
 
 <template name='questionPosed'>
   <div class='QuestionPosed'>
-    <p>{{question}}</p>
-    {{#if answer}}
-      <p>{{answer}}</p>
-      <button class='QuestionPosed-resetButton'>Reset</button>
+    {{#if question}}
+      <p>{{question}}</p>
+      {{#if answer}}
+        <p>{{answer}}</p>
+        <button class='QuestionPosed-resetButton'>Reset</button>
+      {{else}}
+      <textarea class='QuestionPosed-textarea' placeholder="{{answerPlaceholder}}"></textarea>
+        <button class='QuestionPosed-submitButton'>Answer</button>
+      {{/if}}
+      <button class='QuestionPosed-nextButton'>Next</button>
     {{else}}
-    <textarea class='QuestionPosed-textarea' placeholder="{{answerPlaceholder}}"></textarea>
-      <button class='QuestionPosed-submitButton'>Answer</button>
+      The End!
     {{/if}}
   </div>
 </template>
