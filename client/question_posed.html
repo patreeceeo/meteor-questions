@@ -3,12 +3,11 @@
 <template name='questionPosed'>
   <div class='QuestionPosed'>
     <p>{{question}}</p>
-    <!-- idea: use randomized coaching messages for placeholder -->
     {{#if answer}}
       <p>{{answer}}</p>
       <button class='QuestionPosed-resetButton'>Reset</button>
     {{else}}
-      <textarea class='QuestionPosed-textarea' placeholder="Your Answer"></textarea>
+    <textarea class='QuestionPosed-textarea' placeholder="{{answerPlaceholder}}"></textarea>
       <button class='QuestionPosed-submitButton'>Answer</button>
     {{/if}}
   </div>

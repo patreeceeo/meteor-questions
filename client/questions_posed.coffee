@@ -50,6 +50,16 @@ class QuestionPosedView extends View
     question: ->
       @questionModel.get 'question'
 
+    answerPlaceholder: ->
+      [
+        'Get it all out'
+        'Tell me how you REALLY feel'
+        'What says you?'
+        'How `bout that'
+        'Lay it on me'
+      ][Math.floor(Math.random() * 5)]
+
+
   initialize: ->
     @questionModel = new App.QuestionModel '0'
     @questionModel.insert()
