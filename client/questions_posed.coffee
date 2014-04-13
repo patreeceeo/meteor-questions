@@ -21,17 +21,16 @@
 
 class QuestionPosedView extends View
   template: Template.questionPosed
-  nc:
-    textarea:
-      block: 'QuestionPosed'
-      element: 'textarea'
   events:
     answerQuestion:
       event: 'click'
       block: 'QuestionPosed'
       element: 'submitButton'
       callback: (event) ->
-        answer = $('textarea').val()
+        answer = @find(
+          block: 'QuestionPosed'
+          element: 'textarea'
+        ).val()
 
         @answerModel.set 
           answer: answer, 
@@ -45,10 +44,6 @@ class QuestionPosedView extends View
         @answerModel.remove()
 
   dataHelpers:
-    # questionAnswered: ->
-    #   App.AnswerCollection.find().map (answer) ->
-    #     answer.question = App.QuestionCollection.findOne(answer._idQuestion)?.question or "WAT>?"
-    #     answer
     answer: ->
       @answerModel.get 'answer'
 
@@ -60,7 +55,6 @@ class QuestionPosedView extends View
     @questionModel.insert()
     @answerModel = new App.AnswerModel '0'
     @answerModel.insert _idQuestion: '0'
-    # @answerModel.set '_idQuestion', '0'
       
 
 Meteor.startup ->

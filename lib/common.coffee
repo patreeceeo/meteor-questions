@@ -29,7 +29,6 @@ class App.Model
     @collection.insert @doc, (error) ->
       @_created = not error?
 
-
   set: (first, second, third) ->
     if _.isObject(first)
       @_setMany first, second
@@ -44,13 +43,13 @@ class App.Model
 
   _setMany: (hash, options) ->
     hash = _.omit hash, '_id'
-    # @collection.update @_collectionSelector, { $set: hash }
+
     @_upsert @_collectionSelector, hash
 
   _setOne: (key, value, options) ->
     hash = {}
     hash["#{key}"] = value
-    # @collection.update @_collectionSelector, { $set: hash }
+
     @_upsert @_collectionSelector, hash
 
   get: (key) ->
