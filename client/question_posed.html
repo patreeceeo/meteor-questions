@@ -4,8 +4,11 @@
   <div class='QuestionPosed'>
     {{#if question}}
       <p>{{question}}</p>
-      {{#if answer}}
+      {{#each otherAnswers}}
         <p>{{answer}}</p>
+      {{/each}}
+      {{#if newAnswer}}
+        <p>{{newAnswer}}</p>
         <button class='QuestionPosed-resetButton'>Reset</button>
       {{else}}
       <textarea class='QuestionPosed-textarea' placeholder="{{answerPlaceholder}}"></textarea>

@@ -32,7 +32,7 @@ class App.QuestionPosedView extends View
           element: 'textarea'
         ).val()
 
-        @answerModel.set 
+        @newAnswerModel.set 
           answer: answer, 
           _idQuestion: @questionModel.get('_id')
 
@@ -41,7 +41,7 @@ class App.QuestionPosedView extends View
       block: 'QuestionPosed'
       element: 'resetButton'
       callback: (event) ->
-        @answerModel.remove()
+        @newAnswerModel.remove()
 
     nextQuestion:
       event: 'click'
@@ -63,9 +63,12 @@ class App.QuestionPosedView extends View
             _idQuestion: @options._idQuestion - 1
 
   dataHelpers:
-    answer: ->
+    newAnswer: ->
       @dep.depend()
-      @answerModel.get 'answer'
+      @newAnswerModel.get 'answer'
+
+    otherAnswers: ->
+      @otherAnswers
 
     question: ->
       @dep.depend()
@@ -89,7 +92,14 @@ class App.QuestionPosedView extends View
 
   load: (@options) ->
     @questionModel = new App.QuestionModel options._idQuestion
-    @answerModel = new App.AnswerModel options._idQuestion
+    @newAnswerModel = new App.AnswerModel options._idQuestion
+    @otherAnswers = App.AnswerCollection.find
+      $and: [
+        { _idQuestion: "#{options._idQuestion}" }
+        { _id: $ne: @newAnswerModel.get '_id' }
+      ]
+
+
     @dep.changed()
       
 

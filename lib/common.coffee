@@ -22,7 +22,7 @@ class App.Model
     @sync()
 
   sync: ->
-    @doc = @collection.findOne(@_collectionSelector)
+    @doc = _.defaults { _id: @_collectionSelector }, @collection.findOne(@_collectionSelector)
 
   insert: (document = {}) ->
     @doc = _.defaults(_id: @_collectionSelector, document, @defaults)
@@ -53,7 +53,8 @@ class App.Model
     @_upsert @_collectionSelector, hash
 
   get: (key) ->
-    @collection.findOne(@_collectionSelector)?[key]
+    # @collection.findOne(@_collectionSelector)?[key]
+    @doc[key]
 
   remove: ->
     @collection.remove(@_collectionSelector)
