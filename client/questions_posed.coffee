@@ -18,26 +18,31 @@
 #   questionPosed: ->
 #     App.QuestionCollection.find()
 
-class QuestionModel extends App.Model
-  collection: -> App.QuestionCollection
-
-class AnswerModel extends App.Model
-  collection: -> App.QuestionCollection
 
 class QuestionPosedView extends View
   template: Template.questionPosed
-  events:
-    answerQuestion:
-      event: 'keydown'
+  nc:
+    textarea:
       block: 'QuestionPosed'
       element: 'textarea'
+  events:
+    answerQuestion:
+      event: 'click'
+      block: 'QuestionPosed'
+      element: 'submitButton'
       callback: (event) ->
-        if (event.which || event.keyCode) is 13
-          answer = $(event.target).val()
+        answer = $('textarea').val()
 
-          @answerModel.set 
-            answer: answer, 
-            _idQuestion: @questionModel.get('_id')
+        @answerModel.set 
+          answer: answer, 
+          _idQuestion: @questionModel.get('_id')
+
+    resetQuestion:
+      event: 'click'
+      block: 'QuestionPosed'
+      element: 'resetButton'
+      callback: (event) ->
+        @answerModel.remove()
 
   dataHelpers:
     # questionAnswered: ->
@@ -51,8 +56,11 @@ class QuestionPosedView extends View
       @questionModel.get 'question'
 
   initialize: ->
-    @questionModel = new QuestionModel '0'
-    @answerModel = new AnswerModel _idQuestion: '0'
+    @questionModel = new App.QuestionModel '0'
+    @questionModel.insert()
+    @answerModel = new App.AnswerModel '0'
+    @answerModel.insert _idQuestion: '0'
+    # @answerModel.set '_idQuestion', '0'
       
 
 Meteor.startup ->

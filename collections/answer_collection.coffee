@@ -6,6 +6,11 @@ Answer =
   _idQuestion: String
   answer: String
 
+class App.AnswerModel extends App.Model
+  collection: -> App.AnswerCollection
+  defaults:
+    answer: ''
+
 if Meteor.isServer
   Meteor.publish 'AnswerCollection', -> App.AnswerCollection.find()
 else

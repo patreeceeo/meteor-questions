@@ -5,6 +5,11 @@ Question =
   _id: String
   question: String
 
+class App.QuestionModel extends App.Model
+  collection: -> App.QuestionCollection
+  defaults: 
+    question: ''
+
 if Meteor.isServer
   Meteor.publish 'QuestionCollection', -> App.QuestionCollection.find()
 else
