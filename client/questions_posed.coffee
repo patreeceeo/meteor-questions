@@ -52,6 +52,16 @@ class App.QuestionPosedView extends View
           _idList: 0
           _idQuestion: @options._idQuestion + 1
 
+    prevQuestion:
+      event: 'click'
+      block: 'QuestionPosed'
+      element: 'prevButton'
+      callback: (event) ->
+        if @options._idQuestion > 0
+          Router.go 'questionPosed',
+            _idList: 0
+            _idQuestion: @options._idQuestion - 1
+
   dataHelpers:
     answer: ->
       @dep.depend()
@@ -72,8 +82,8 @@ class App.QuestionPosedView extends View
       ][Math.floor(Math.random() * 5)]
 
   initialize: (@options = {}) ->
-    # @options._idList ?= 0
-    # @options._idQuestion ?= 0
+    @options._idList ?= 0
+    @options._idQuestion ?= 0
     @dep = new Deps.Dependency
     @load(@options)
 
