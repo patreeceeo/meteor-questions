@@ -5,7 +5,7 @@
       "handlebar-helpers": {},
       "iron-router": {},
       "bview": {
-        "git": "../meteor-bview/",
+        "git": "git@github.com:pzatrick/meteor-bview.git",
         "branch": "master"
       }
     },
@@ -17,18 +17,18 @@
       },
       "iron-router": {
         "git": "https://github.com/EventedMind/iron-router.git",
-        "tag": "v0.7.0",
-        "commit": "05f34bc48c4cad9fdaa366c1ddcabe6980232ece"
+        "tag": "v0.7.1",
+        "commit": "d1ffb3f06ea4c112132b030f2eb1a70b81675ecb"
       },
       "bview": {
-        "git": "../meteor-bview/",
+        "git": "git@github.com:pzatrick/meteor-bview.git",
         "branch": "master",
-        "commit": "784e8c0fcd9a7090cb9d5c59bafc1a0db29edd05"
+        "commit": "bee3e295d272b75018ee801489c555d85cb1c7e3"
       },
       "blaze-layout": {
         "git": "https://github.com/EventedMind/blaze-layout.git",
-        "tag": "v0.2.2",
-        "commit": "8bc53798fe5965669ae67c72f91829fcfdceabfd"
+        "tag": "v0.2.4",
+        "commit": "b40e9b0612329288d75cf52ad14a7da64bb8618f"
       }
     }
   }

@@ -2,5 +2,9 @@
   "packages": {
     "handlebar-helpers": {},
     "iron-router": {},
+    "bview": {
+      "git": "git@github.com:pzatrick/meteor-bview.git",
+      "branch": "master"
+    }
   }
 }
