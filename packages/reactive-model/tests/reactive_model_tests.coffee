@@ -15,29 +15,36 @@ class Kimchi extends ReactiveModel
   collection: Kimchis
 
 if Meteor.isClient
-  Kimchis.insert
-    _id: '0'
-    name: 'cabbage'
-  Kimchis.insert
-    _id: '1'
-    name: 'raddish'
 
-  kimchi0 = new Kimchi '0'
-  kimchi1 = new Kimchi '1'
+  Tinytest.addAsync 'ReactiveModel - get() and set()', (test, done) ->
+    Kimchis.insert
+      _id: '0'
+      name: 'cabbage'
 
-  Tinytest.add 'ReactiveModel - instantiation', (test) ->
+    kimchi0 = new Kimchi '0'
 
     test.equal kimchi0.get('name'), 'cabbage',
-      'kimchi 0 should be named "cabbage"'
+      "kimchi 0 should be named 'cabbage'"
 
-  testAsyncMulti 'ReactiveModel - updating', [
-    (test, expect) ->
+    kimchi0.set 'name', 'spicy cabbage', success: ->
+      test.equal kimchi0.get('name'), 'spicy cabbage', "kimchi 0 should still be named 'spicy cabbage'"
+      done()
 
-      kimchi0.set 'name', 'spicy cabbage'
+    test.equal kimchi0.get('name'), 'spicy cabbage',
+      "kimchi 0 should immediately be re-named 'spicy cabbage'"
 
-      test.equal kimchi0.get('name'), 'spicy cabbage',
-        'kimchi 0 should now be named "spicy cabbage"'
-  ]
+    kimchi0.set {
+      name: "spicy cabbage"
+      origin: "Korea"
+    }, 
+      success: ->
+        test.equal kimchi0.get('origin'), 'Korea', "kimchi 0 should still be from Korea"
+        done()
+        
+    test.equal kimchi0.get('origin'), 'Korea',
+      "kimchi 0's origin should immediately be set to Korea"
+
+    
 
 
 

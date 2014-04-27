@@ -33,26 +33,33 @@ class ReactiveModel
     else
       @_setOne first, second, third
 
-  _upsert: (selector, document) ->
-    if @collection.findOne(selector)?
-      @collection.update selector, $set: document, => @sync
+  _upsert: (selector, document, options) ->
+    wrappedCallback = 
+      (error, effectedCount) =>
+        if error
+          options.error?(error)
+        else
+          options.success?()
+    if @collection.findOne(selector)? 
+      @collection.update selector, $set: document, options, wrappedCallback
+        
     else
-      @collection.insert _.defaults(_id: selector, document), => @sync
+      @collection.insert _.defaults(_id: selector, document), options, wrappedCallback
 
   _setMany: (hash, options) ->
     hash = _.omit hash, '_id'
 
-    @_upsert @_collectionSelector, hash
+    _.extend @doc, hash
+
+    @_upsert @_collectionSelector, hash, options
 
   _setOne: (key, value, options) ->
-    # hash = {}
-    # hash["#{key}"] = value
     @doc[key] = value
+    doc = _.omit @doc, '_id',
 
-    @_upsert @_collectionSelector, @doc
+    @_upsert @_collectionSelector, doc, options
 
   get: (key) ->
-    # @collection.findOne(@_collectionSelector)?[key]
     @doc[key]
 
   remove: ->
