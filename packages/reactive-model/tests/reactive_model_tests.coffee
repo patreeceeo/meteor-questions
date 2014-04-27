@@ -59,10 +59,12 @@ if Meteor.isClient
     Deps.autorun ->
       name = kimchi.get('name')
       callCount++
-      # TODO: figure out why this is being called more than twice
-      # My hypothesis is that Tinytest clears the local collections 
-      # when all tests have been started but before they're all 
-      # done. That's why I'm testing if `name` is defined.
+      ###
+TODO: figure out why this is being called more than twice
+      My hypothesis is that Tinytest clears the local collections 
+      when all tests have been started but before they're all 
+      done. That's why I'm testing if `name` is defined.
+      ###
       if changed and name?
         test.equal callCount, 2, 'One change to the model should only trigger one re-run'
         test.equal name, 'spicy cabbage', 'Changes to model attributes should be reactive'
@@ -72,8 +74,33 @@ if Meteor.isClient
     changed = true
     kimchi.set 'name', 'spicy cabbage'
 
+  Tinytest.addAsync 'ReactiveModel - select()', (test, done) ->
+    callCount = 0
+    changed = false
+    
+    Kimchis.insert
+      name: 'cabbage'
+    Kimchis.insert
+      name: 'raddish'
 
+    kimchi = new Kimchi name: 'cabbage'
 
+    Deps.autorun ->
+      name = kimchi.get('name')
+      callCount++
+      ###
+TODO: figure out why this is being called more than twice
+      My hypothesis is that Tinytest clears the local collections 
+      when all tests have been started but before they're all 
+      done. That's why I'm testing if `name` is defined.
+      ###
+      if changed and name?
+        test.equal callCount, 2, 'One re-select should only trigger one re-run'
+        test.equal name, 'raddish', 'Selecting should be reactive'
+        done()
+
+    changed = true
+    kimchi.select(name: 'raddish')
 
 
 

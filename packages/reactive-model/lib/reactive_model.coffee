@@ -7,6 +7,7 @@ class ReactiveModel
     "#{@constructor._instanceCount}"
 
   constructor: (@selector) ->
+    @_dep = new Deps.Dependency
     @constructor._instanceCount = 0
 
     @collection = _.result this, 'collection'
@@ -50,6 +51,7 @@ class ReactiveModel
     @_upsert hash, options
 
   getAll: ->
+    @_dep.depend()
     @collection.findOne(@_id)
 
   get: (key) ->
@@ -57,6 +59,17 @@ class ReactiveModel
 
   exists: ->
     @getAll()?
+
+  select: (@selector) ->
+    @_dep.changed()
+    @_id =
+      if _.isNumber(@selector)
+        "#{@selector}"
+      else if _.isString(@selector)
+        @selector
+      else
+        @collection.findOne(@selector)?._id or Random.id()
+    this
 
   remove: ->
     @collection.remove(@_id)
