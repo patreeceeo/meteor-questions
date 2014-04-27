@@ -2,23 +2,12 @@ class ReactiveModel
 
   defaults: {}
 
-  _nextIdentifier: ->
-    @constructor._instanceCount++
-    "#{@constructor._instanceCount}"
-
-  constructor: (@selector) ->
+  constructor: (selector) ->
     @_dep = new Deps.Dependency
-    @constructor._instanceCount = 0
 
     @collection = _.result this, 'collection'
 
-    @_id =
-      if _.isNumber(@selector)
-        "#{@selector}"
-      else if _.isString(@selector)
-        @selector
-      else
-        @collection.findOne(@selector)?._id or Random.id()
+    @select(selector)
 
   set: (first, second, third) ->
     if _.isObject(first)
