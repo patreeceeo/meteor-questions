@@ -73,6 +73,8 @@ TODO: figure out why this is being called more than twice
 
     changed = true
     kimchi.set 'name', 'spicy cabbage'
+    # set same value again, should not invalidate
+    kimchi.set 'name', 'spicy cabbage'
 
   Tinytest.addAsync 'ReactiveModel - select()', (test, done) ->
     callCount = 0
@@ -100,6 +102,8 @@ TODO: figure out why this is being called more than twice
         done()
 
     changed = true
+    kimchi.select(name: 'raddish')
+    # select same document, should not invalidate
     kimchi.select(name: 'raddish')
 
 

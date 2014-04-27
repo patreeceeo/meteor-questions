@@ -60,15 +60,17 @@ class ReactiveModel
   exists: ->
     @getAll()?
 
-  select: (@selector) ->
-    @_dep.changed()
-    @_id =
-      if _.isNumber(@selector)
-        "#{@selector}"
-      else if _.isString(@selector)
-        @selector
-      else
-        @collection.findOne(@selector)?._id or Random.id()
+  select: (newSelector) ->
+    unless EJSON.equals @selector, newSelector
+      @selector = newSelector
+      @_dep.changed()
+      @_id =
+        if _.isNumber(@selector)
+          "#{@selector}"
+        else if _.isString(@selector)
+          @selector
+        else
+          @collection.findOne(@selector)?._id or Random.id()
     this
 
   remove: ->
