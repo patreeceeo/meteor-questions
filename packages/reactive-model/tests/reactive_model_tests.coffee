@@ -2,28 +2,38 @@
 
 
 this.Kimchis = new Meteor.Collection 'kimchis'
-Kimchis.allow
-  insert: -> true
-  update: -> true
-  remove: -> true
+
+if Meteor.isServer
+  Kimchis.remove({})
+  Kimchis.allow
+    insert: (userId, doc) -> 
+      console.log 'inserting, doc:', doc
+      true
+    update: (userId, doc) -> 
+      console.log 'updating, doc:', doc
+      true
+    remove: (userId, doc) -> 
+      console.log 'removing, doc:', doc
+      true
 
 class Kimchi extends ReactiveModel
   collection: Kimchis
 
+Tinytest.addx = ->
+
 if Meteor.isClient
 
-  Tinytest.addAsync 'ReactiveModel - get() and set()', (test, done) ->
+  Tinytest.add 'ReactiveModel - get() and set()', (test, done) ->
     Kimchis.insert
-      _id: '0'
       name: 'cabbage'
 
-    kimchi = new Kimchi '0'
+    kimchi = new Kimchi name: 'cabbage'
 
     test.equal kimchi.get('name'), 'cabbage',
       "kimchi 0 should be named 'cabbage'"
 
-    kimchi.set 'name', 'spicy cabbage', success: ->
-      test.equal kimchi.get('name'), 'spicy cabbage', "kimchi 0 should still be named 'spicy cabbage'"
+    kimchi.set 'name', 'spicy cabbage'    
+
 
     test.equal kimchi.get('name'), 'spicy cabbage',
       "kimchi 0 should immediately be re-named 'spicy cabbage'"
@@ -31,39 +41,36 @@ if Meteor.isClient
     kimchi.set {
       name: "spicy cabbage"
       origin: "Korea"
-    }, 
-      success: ->
-        test.equal kimchi.get('origin'), 'Korea', "kimchi 0 should still be from Korea"
-        done()
+    } 
         
     test.equal kimchi.get('origin'), 'Korea',
       "kimchi 0's origin should immediately be set to Korea"
 
     
   Tinytest.addAsync 'ReactiveModel - reactivity', (test, done) ->
-
-    kimchi0Name = 'cabbage'
-    kimchi0Changed = false
-
-    Kimchis.insert
-      _id: '0'
-      name: kimchi0Name
+    callCount = 0
+    changed = false
 
     Kimchis.insert
-      _id: '1'
-      name: 'raddish'
+      name: 'cabbage'
 
-    kimchi0 = new Kimchi '0'
-    kimchi1 = new Kimchi '1'
+    kimchi = new Kimchi name: 'cabbage'
 
     Deps.autorun ->
-      test.equal kimchi0.get('name'), kimchi0Name, 'Changes to model attributes should be reactive'
-      if kimchi0Changed
+      name = kimchi.get('name')
+      callCount++
+      # TODO: figure out why this is being called more than twice
+      # My hypothesis is that Tinytest clears the local collections 
+      # when all tests have been started but before they're all 
+      # done. That's why I'm testing if `name` is defined.
+      if changed and name?
+        test.equal callCount, 2, 'One change to the model should only trigger one re-run'
+        test.equal name, 'spicy cabbage', 'Changes to model attributes should be reactive'
         done()
 
-    kimchi0Name = 'spicy cabbage'
-    kimchi0Changed = true
-    kimchi0.set 'name', kimchi0Name
+
+    changed = true
+    kimchi.set 'name', 'spicy cabbage'
 
 
 
