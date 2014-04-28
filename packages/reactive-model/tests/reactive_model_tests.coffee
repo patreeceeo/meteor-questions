@@ -18,8 +18,13 @@ if Meteor.isServer
 
 class Kimchi extends ReactiveModel
   collection: Kimchis
+  defaults:
+    fermentedForMonths: 9
+    price: 8
 
-Tinytest.addx = ->
+xTinytest =
+  add: ->
+  addAsync: ->
 
 if Meteor.isClient
 
@@ -106,5 +111,50 @@ TODO: figure out why this is being called more than twice
     # select same document, should not invalidate
     kimchi.select(name: 'raddish')
 
+  Tinytest.addAsync 'ReactiveModel - inserting w/out _id', (test, done) ->
 
+    kimchi = new Kimchi name: 'kale & cabbage'
 
+    doc = Kimchis.findOne name: 'kale & cabbage'
+
+    test.isUndefined(doc, 'when selector is not an _id, insert() needs to be called')
+
+    
+    Deps.autorun ->
+      name = kimchi.get('name')
+      if kimchi.inserted() and name?
+        test.equal name, 'kale & cabbage'
+        done()
+
+    kimchi.insert() unless kimchi.inserted()
+
+    test.isTrue kimchi.inserted()
+
+  Tinytest.addAsync 'ReactiveModel - inserting w/ _id', (test, done) ->
+
+    kimchi = new Kimchi 'da best'
+
+    doc = Kimchis.findOne 'da best'
+
+    test.isUndefined(doc, 'when selector is not an _id, insert() needs to be called')
+
+    Deps.autorun ->
+      _id = kimchi.get('_id')
+      if kimchi.inserted() and _id?
+        test.equal _id, 'da best'
+        done()
+
+    kimchi.insert() unless kimchi.inserted()
+
+    test.isTrue kimchi.inserted()
+
+  Tinytest.add 'ReactiveModel - defaults', (test) ->
+
+    kimchi = new Kimchi name: 'kimchi face'
+
+    kimchi.insert() unless kimchi.inserted()
+
+    test.equal kimchi.get('fermentedForMonths'), 9
+    test.equal kimchi.get('price'), 8
+
+  # TODO: report issue w/ Tinytest: last test takes longer on average
