@@ -117,7 +117,7 @@ TODO: figure out why this is being called more than twice
 
     doc = Kimchis.findOne name: 'kale & cabbage'
 
-    test.isUndefined(doc, 'when selector is not an _id, insert() needs to be called')
+    test.isUndefined(doc, 'insert() must be called to put the document in the collection')
 
     
     Deps.autorun ->
@@ -136,7 +136,7 @@ TODO: figure out why this is being called more than twice
 
     doc = Kimchis.findOne 'da best'
 
-    test.isUndefined(doc, 'when selector is not an _id, insert() needs to be called')
+    test.isUndefined(doc, 'insert() must be called to put the document in the collection')
 
     Deps.autorun ->
       _id = kimchi.get('_id')
@@ -150,11 +150,30 @@ TODO: figure out why this is being called more than twice
 
   Tinytest.add 'ReactiveModel - defaults', (test) ->
 
-    kimchi = new Kimchi name: 'kimchi face'
+    Kimchis.insert name: 'kimchi kimchi'
+
+    kimchi = new Kimchi name: 'kimchi smoothie'
+    kimchi2 = new Kimchi name: 'kimchi kimchi'
 
     kimchi.insert() unless kimchi.inserted()
 
     test.equal kimchi.get('fermentedForMonths'), 9
     test.equal kimchi.get('price'), 8
+
+    test.equal kimchi2.get('fermentedForMonths'), 9
+    test.equal kimchi2.get('price'), 8
+    
+
+  Tinytest.add 'ReactiveModel - remove()', (test) ->
+
+    Kimchis.insert name: 'kimchi pancakes'
+
+    kimchi = new Kimchi name: 'kimchi pancakes'
+
+    test.isTrue kimchi.remove()
+
+    count = Kimchis.find(name: 'kimchi pancakes').count()
+
+    test.equal count, 0
 
   # TODO: report issue w/ Tinytest: last test takes longer on average
