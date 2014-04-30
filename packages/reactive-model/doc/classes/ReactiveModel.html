@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta charset='UTF-8'>
+  <title>ReactiveModel Documentation</title>
+  <link rel='stylesheet' href='..&#47;assets/biscotto.css' type='text/css'>
+  <script src='..&#47;assets/biscotto.js'></script>
+  <script src='..&#47;assets/search_data.js'></script>
+</head>
+  <body>
+    <div id='base' data-path='..&#47;'></div>
+<div id='header'>
+  <div id='menu'>
+    <a href='..&#47;README.md.html' title='ReactiveModel'>ReactiveModel</a>
+    &raquo;
+    <a href='..&#47;class_index.html' title='Index'>Index</a>
+    &raquo;
+    <span class='title'>ReactiveModel</span>
+    <nav>
+      <ul>
+        <li class='noframes'>
+          (<a class='noframes' href='#'>no frames</a>)
+        </li>
+      </ul>
+    </nav>
+    <div id='search'>
+      <a id='class_list_link' href='..&#47;class_list.html'>Classes</a>
+      <a id='method_list_link' href='..&#47;method_list.html'>Methods</a>
+      <a id='extra_list_link' href='..&#47;extra_list.html'>Extras</a>
+    </div>
+  </div>
+  <iframe id='search_frame'></iframe>
+  <div id='fuzzySearch'>
+    <input type='text'>
+    <ol></ol>
+  </div>
+  <div id='help'>
+    <p>
+      Quickly fuzzy find classes, mixins, methods, file:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-T</span>
+        Open fuzzy finder dialog
+      </li>
+    </ul>
+    <p>
+      In frame mode you can toggle the list naviation frame on the left side:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-L</span>
+        Toggle list view
+      </li>
+    </ul>
+    <p>
+      You can focus a list in frame mode or toggle a tab in frameless mode:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-C</span>
+        Class list
+      </li>
+      <li>
+        <span>Ctrl-I</span>
+        Mixin list
+      </li>
+      <li>
+        <span>Ctrl-F</span>
+        File list
+      </li>
+      <li>
+        <span>Ctrl-M</span>
+        Method list
+      </li>
+      <li>
+        <span>Ctrl-E</span>
+        Extras list
+      </li>
+    </ul>
+    <p>
+      You can focus and blur the search input:
+    </p>
+    <ul>
+      <li>
+        <span>Ctrl-S</span>
+        Focus search input
+      </li>
+      <li>
+        <span>Esc</span>
+        Blur search input
+      </li>
+    </ul>
+    <p>
+      In frameless mode you can close the list tab:
+    </p>
+    <ul>
+      <li>
+        <span>Esc</span>
+        Close list tab
+      </li>
+    </ul>
+  </div>
+</div>
+    <div id='content'>
+      <h1>
+        Class
+        ReactiveModel
+      </h1>
+      <table class='box'>
+        <tr>
+          <td>Defined in:</td>
+          <td>lib&#47;reactive_model.coffee</td>
+        </tr>
+      </table>
+      <h2>Instance Method Summary</h2>
+      <ul class='summary'>
+  <li>
+    <span class='signature'>
+      <a href='#constructor-instance'>
+        ::<strong>constructor</strong>(selector)
+      </a>
+    </span>
+    <span class='desc'>
+      Wrap the first document matched given selector in a reactive model.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#get-instance'>
+        ::<strong>get</strong>(key)
+      </a>
+    </span>
+    <span class='desc'>
+      Get one field of the wrapped document.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#getAll-instance'>
+        Object ::<strong>getAll</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Get the whole wrapped document.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#insert-instance'>
+        ::<strong>insert</strong>(options = {})
+      </a>
+    </span>
+    <span class='desc'>
+      Insert the wrapped document into the model&#39;s collection.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#inserted-instance'>
+        Boolean ::<strong>inserted</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Test whether the wrapped document has been inserted yet.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#remove-instance'>
+        ::<strong>remove</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      Remove the wrapped document from the collection.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#select-instance'>
+        ::<strong>select</strong>(newSelector)
+      </a>
+    </span>
+    <span class='desc'>
+      Wrap the first document that matches given selector, potentially changing which document is being wrapped.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#set-instance'>
+        ::<strong>set</strong>(first, second, third)
+      </a>
+    </span>
+    <span class='desc'>
+      Set the value of one or multiple fields in the modeled document.
+    </span>
+  </li>
+</ul>
+      <h2>Constructor Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='constructor-instance'>
+      ::<strong>constructor</strong>(selector)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L27'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Wrap the first document matched given selector in a reactive model. The term &quot;model&quot; is used in the sense of  Model-View-Controller separation of concerns in which a model encapsulates data and the business rules around that data.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Object)</span>
+      <span class='name'>selector</span>
+      &mdash;
+      <span class='desc'><a href="http://docs.meteor.com/#selectors">a Mongo selector</a> (<a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> or <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>)</span>
+    </li>
+  </ul>
+</div>
+  </div>
+</div>
+      <h2>Instance Method Details</h2>
+      <div class='methods'>
+  <div class='method_details'>
+    <p class='signature' id='get-instance'>
+      ::<strong>get</strong>(key)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L84'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Get one field of the wrapped document.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(String)</span>
+      <span class='name'>key</span>
+      &mdash;
+      <span class='desc'>a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a></span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns the value associated with <code>key</code></span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='getAll-instance'>
+      Object ::<strong>getAll</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L75'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Get the whole wrapped document.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Object</tt>)
+      &mdash;
+      <span class='desc'>Returns an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a></span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='insert-instance'>
+      ::<strong>insert</strong>(options = {})
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L67'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Insert the wrapped document into the model&#39;s collection.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Object)</span>
+      <span class='name'>options</span>
+      &mdash;
+      <span class='desc'>an options <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> (optional)</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns the unique _id of the inserted document</span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='inserted-instance'>
+      Boolean ::<strong>inserted</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L90'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Test whether the wrapped document has been inserted yet.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      (<tt>Boolean</tt>)
+      &mdash;
+      <span class='desc'>Returns a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Boolean'>Boolean</a></span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='remove-instance'>
+      ::<strong>remove</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L115'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Remove the wrapped document from the collection.</p>
+</div>
+<div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns <code>this</code></span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='select-instance'>
+      ::<strong>select</strong>(newSelector)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L99'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Wrap the first document that matches given selector,  potentially changing which document is being wrapped.</p>
+</div>
+<div class='tags'>
+  <h3>Parameters:</h3>
+  <ul class='param'>
+    <li>
+      <span class='type'>(Object)</span>
+      <span class='name'>newSelector</span>
+      &mdash;
+      <span class='desc'><a href="http://docs.meteor.com/#selectors">a Mongo selector</a> (<a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> or <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>)</span>
+    </li>
+  </ul>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns <code>this</code></span>
+    </li>
+  </ul>
+</div>
+  </div>
+  <div class='method_details'>
+    <p class='signature' id='set-instance'>
+      ::<strong>set</strong>(first, second, third)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L56'>Source</a>
+    </p>
+    <div class='docstring'>
+  <p>Set the value of one or multiple fields in the modeled document.</p><p><a href='../classes/ReactiveModel.html#set-instance'>::set</a> can be called two ways: one-off and 
+bulk.</p>
+  <div class='examples'>
+    <h3>Examples:</h3>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'></code></pre>
+    <h4>
+      
+    </h4>
+    <pre><code class='coffee'></code></pre>
+  </div>
+</div>
+<div class='tags'>
+</div>
+  </div>
+</div>
+    </div>
+    <div id='footer'>
+  Generated on
+  Tue Apr 29 2014 21:09:53 GMT-0700 (PDT)
+  by
+  <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
+  v2.1.1
+  (Node.js v0.10.26).
+  &#10034;
+  Press Ctrl-h to see the keyboard shortcuts
+</div>
+  </body>
+</html>

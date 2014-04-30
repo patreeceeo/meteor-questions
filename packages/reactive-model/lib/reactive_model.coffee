@@ -24,7 +24,6 @@ class ReactiveModel
   #
   # selector - [a Mongo selector](http://docs.meteor.com/#selectors) ({Object} or {String})
   #
-  # {ReactiveModel}
   constructor: (selector) ->
     @_dep = new Deps.Dependency
 
@@ -45,23 +44,20 @@ class ReactiveModel
   # document.
   #
   # {::set} can be called two ways: one-off and 
-  # bulk. In the one off form the arguments are
+  # bulk.
   #
-  # first - a {String} used as the key for the field to set
-  # second - the value that will be set for the field
-  # third - an options {Object} (optional)
-  #
-  # In the bulk form, the arguments are
-  #
-  # first - an {Object} that will be superimposed on the wrapped
-  #         document
-  # second - an options {Object} (optional)
   #
   # Examples
   #
-  #  model.set('flavor', 'turkish');
+  #   model.set('flavor', 'turkish');
+  #   model.set({flavor: 'turkish', price: 4});
   #
-  #  model.set({flavor: 'turkish', price: 4});
+  #
+  # first - one-off: a {String} is the key for the field to set.
+  #         bulk: an {Object} is the key/value pairs to overwrite part or all of the document with.
+  # second - one-off: any value that will become the field value.
+  #          bulk: {Object} options.
+  # third - one-off: {Object} options.
   #
   # Returns true if changes were propagated to the database
   set: (first, second, third) ->

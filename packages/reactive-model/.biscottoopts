@@ -1,0 +1,7 @@
+--name       "ReactiveModel"
+--readme     README.md
+--title      "ReactiveModel Documentation"
+--private
+--quiet
+--output-dir ./doc
+./lib
