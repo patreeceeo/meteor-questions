@@ -3,15 +3,18 @@
 
 class ReactiveModel
 
-  # You must override `collection` with a Meteor.Collection 
+  ### Public ###
+
+  # You must override `collection` with a 
+  # [Meteor.Collection](http://docs.meteor.com/#meteor_collection)
   # instance.
   collection: null
 
-  # Override `defaults` with an object that contains default
+  # Override `defaults` with an {Object} that contains default
   # values for the wrapped document. The default values will
   # be set in the server on construction of the model provided
   # that the document already exists in the collection, otherwise
-  # the defaults will be set by ReactiveModel::insert()
+  # the defaults will be set by {::insert}
   defaults: {}
 
   # Wrap the first document matched given selector in a reactive
@@ -19,9 +22,9 @@ class ReactiveModel
   # Model-View-Controller separation of concerns in which a model
   # encapsulates data and the business rules around that data.
   #
-  # selector - a Mongo DB selector
+  # selector - [a Mongo selector](http://docs.meteor.com/#selectors) ({Object} or {String})
   #
-  # [constructor]
+  # {ReactiveModel}
   constructor: (selector) ->
     @_dep = new Deps.Dependency
 
@@ -41,34 +44,35 @@ class ReactiveModel
   # Set the value of one or multiple fields in the modeled
   # document.
   #
-  # ReactiveModel::set() can be called two ways: one-off and 
+  # {::set} can be called two ways: one-off and 
   # bulk. In the one off form the arguments are
   #
-  # first - a String used as the key for the field to set
+  # first - a {String} used as the key for the field to set
   # second - the value that will be set for the field
-  # third - an options Object (optional)
+  # third - an options {Object} (optional)
   #
   # In the bulk form, the arguments are
   #
-  # first - an Object that will be superimposed on the wrapped
+  # first - an {Object} that will be superimposed on the wrapped
   #         document
-  # second - an options Object (optional)
+  # second - an options {Object} (optional)
   #
-  # Returns true if successful
+  # Examples
+  #
+  #  model.set('flavor', 'turkish');
+  #
+  #  model.set({flavor: 'turkish', price: 4});
+  #
+  # Returns true if changes were propagated to the database
   set: (first, second, third) ->
     if _.isObject(first)
       @_setMany first, second
     else
       @_setOne first, second, third
 
-  _update: (document, options = {}) ->
-    if @collection.findOne(@_id)? 
-      !!@collection.update @_id, 
-        $set: document, options
-
   # Insert the wrapped document into the model's collection.
   #
-  # options - an options Object (optional)
+  # options - an options {Object} (optional)
   #
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
@@ -76,27 +80,16 @@ class ReactiveModel
     document = _.defaults(_id: @_id, @defaults, @selector)
     @collection.insert document
 
-  _setMany: (hash, options) ->
-    hash = _.omit hash, '_id'
-
-    @_update hash, options
-
-  _setOne: (key, value, options) ->
-    hash = {}
-    hash[key] = value
-
-    @_update hash, options
-
   # Get the whole wrapped document.
   #
-  # Returns an Object
+  # Returns an {Object}
   getAll: ->
     @_dep.depend()
     @collection.findOne(@_id)
 
   # Get one field of the wrapped document.
   #
-  # key - a String
+  # key - a {String}
   #
   # Returns the value associated with `key`
   get: (key) ->
@@ -104,14 +97,14 @@ class ReactiveModel
 
   # Test whether the wrapped document has been inserted yet.
   #
-  # Returns a Boolean
+  # Returns a {Boolean}
   inserted: ->
     @getAll()?
 
   # Wrap the first document that matches given selector, 
   # potentially changing which document is being wrapped.
   #
-  # newSelector - a Mongo DB selector
+  # newSelector - [a Mongo selector](http://docs.meteor.com/#selectors) ({Object} or {String})
   #
   # Returns `this` 
   select: (newSelector) ->
@@ -135,6 +128,24 @@ class ReactiveModel
     this
 
 
+  ### Internal ###
+
+
+  _setMany: (hash, options) ->
+    hash = _.omit hash, '_id'
+
+    @_update hash, options
+
+  _setOne: (key, value, options) ->
+    hash = {}
+    hash[key] = value
+
+    @_update hash, options
+
+  _update: (document, options = {}) ->
+    if @collection.findOne(@_id)? 
+      !!@collection.update @_id, 
+        $set: document, options
 
 
 
