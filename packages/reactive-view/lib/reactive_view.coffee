@@ -1,11 +1,4 @@
 
-UI.registerHelper 'block', (block, modifiers..., options) ->
-  View::buildBEMClassName block, null, modifiers
-
-UI.registerHelper 'element', (block, element, modifiers..., options) ->
-  View::buildBEMClassName block, element, modifiers
-
-class Configurable
 
 class ReactiveView
   _getConfig: (name, defaultValue) ->
@@ -17,7 +10,7 @@ class ReactiveView
   constructor: (@config = {}) ->
     view = this
     @_getConfig('template').rendered = ->
-      view.templateInstance = this
+      view.template.instance = this
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
     @initialize(@config)
@@ -25,7 +18,7 @@ class ReactiveView
   initialize: ->
 
   $: (selector) ->
-    @_getConfig('templateInstance').$(@buildEventSelector selector)
+    @template.instance.$(@buildEventSelector selector)
 
   _assignHelpersToTemplate: ->
     boundHelpers = {}

@@ -18,7 +18,7 @@ if Meteor.isClient
       HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
       HTML.Raw("<p>#{Spacebars.mustache @lookup 'description'}</p>")
       UI.Each @lookup('kimchis'), UI.block ->
-        [HTML.Raw "<li class='clickme'>#{Spacebars.mustache @lookup 'name'}</li>"]
+        [HTML.Raw "<li>#{Spacebars.mustache @lookup 'name'}</li>"]
     )
   ]
     
@@ -27,10 +27,16 @@ if Meteor.isClient
     helpers:
       kimchis: ->
         [
-          { name: 'cabbage' }
-          { name: 'raddish' }
-          { name: 'mystery' }
+          { name: 'traditional' }
+          { name: 'con habanero (very spicy)' }
+          { name: 'white raddish' }
         ]
+
+  withTemplateInBody = (fn) ->
+    div = renderToDiv Template.listKimchis
+    cleanUp = addToBody div
+    fn(div)
+    cleanUp()
 
   Tinytest.add 'ReactiveView - _getConfig()', (test) ->
     class BrewView extends KimchiView
@@ -69,45 +75,47 @@ if Meteor.isClient
 
     view = new KimchiView
       events:
-        'click li.clickme': ->
+        'click li': ->
           eventHandled = true
-        'keypress li.clickme': ->
+        'keypress li': ->
           otherEventHandled = true
 
-    div = renderToDiv Template.listKimchis
-    cleanUp = addToBody div
+    withTemplateInBody (subtree) ->
 
-    $(div).find('li').click()
+      $(subtree).find('li').click()
 
-    test.isTrue eventHandled, "it should take an events config object that is
-      used to attach event handlers to the template instance's DOM"
+      test.isTrue eventHandled, "it should take an events config object that is
+        used to attach event handlers to the template instance's DOM"
 
-    $(div).find('li').keypress()
+      $(subtree).find('li').keypress()
 
-    test.isTrue otherEventHandled, "regression: make sure each event handler is 
-      properly bound to the corresponding event/selector"
+      test.isTrue otherEventHandled, "regression: make sure each event handler is 
+        properly bound to the corresponding event/selector"
       
-    cleanUp()
 
   Tinytest.add 'ReactiveView - helpers', (test) ->
-    helperCalled = false
     view = new KimchiView
       helpers:
         title: ->
-          helperCalled = true
           'Kimchis'
         description: ->
           'a tangy, spicy Korean slaw typically made with cabbage and fermented
           in jars buried in the earth for several months.'
 
-    div = renderToDiv Template.listKimchis
-    cleanUp = addToBody div
+    withTemplateInBody (subtree) ->
+      test.equal 'Kimchis', $(subtree).find('h1').text(),
+        "it should take an helpers config object that can be used in the template"
+      test.notEqual 'Kimchis', $(subtree).find('p').text(),
+        "regression: make sure each helper is properly mapped to its name"
 
-    test.equal 'Kimchis', $(div).find('h1').text(),
-      "it should take an helpers config object that can be used in the template"
-    test.notEqual 'Kimchis', $(div).find('p').text(),
-      "regression: make sure each helper is properly mapped to its name"
-
-    cleanUp()
     
+  Tinytest.add 'ReactiveView - scoped jQuery', (test) ->
+    withTemplateInBody (subtree) ->
+
+      view = new KimchiView
+
+      test.length view.$('h1'), 1
+      test.length view.$('li'), 3
+
+
 
