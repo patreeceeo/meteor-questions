@@ -15,6 +15,8 @@ if Meteor.isClient
 
   Template.__define__ 'listKimchis', -> [
     HTML.UL(
+      HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
+      HTML.Raw("<p>#{Spacebars.mustache @lookup 'description'}</p>")
       UI.Each @lookup('kimchis'), UI.block ->
         [HTML.Raw "<li class='clickme'>#{Spacebars.mustache @lookup 'name'}</li>"]
     )
@@ -78,4 +80,26 @@ if Meteor.isClient
     test.isTrue eventHandled
 
     cleanUp()
+
+  Tinytest.add 'ReactiveView - helpers', (test) ->
+    helperCalled = false
+    view = new KimchiView
+      helpers:
+        title: ->
+          helperCalled = true
+          'Kimchis'
+        description: ->
+          'a tangy, spicy Korean slaw typically made with cabbage and fermented
+          in jars buried in the earth for several months.'
+
+    div = renderToDiv Template.listKimchis
+    cleanUp = addToBody div
+
+    test.equal 'Kimchis', $(div).find('h1').text(),
+      "it should take an helpers config object that can be used in the template"
+    test.notEqual 'Kimchis', $(div).find('p').text(),
+      "regression: make sure each helper is properly mapped to its name"
+
+    cleanUp()
+    
 
