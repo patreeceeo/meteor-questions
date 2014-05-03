@@ -31,20 +31,34 @@ if Meteor.isClient
         ]
 
   Tinytest.add 'ReactiveView - _getConfig()', (test) ->
-    view1 = new KimchiView
+    class BrewView extends KimchiView
+      alsoFermented: 'beer'
+    class BrewView2 extends KimchiView
+      alsoFermented: -> 'beer'
+
+    view1 = new BrewView2
+    view2 = new BrewView2
       alsoFermented: 'kombucha'
-    view2 = new KimchiView
-      alsoFermented: -> 'kombucha'
-    view3 = new class extends KimchiView
-      alsoFermented: 'kombucha'
-    view4 = new class extends KimchiView
+    view3 = new BrewView2
       alsoFermented: -> 'kombucha'
 
-    test.equal view1._getConfig('alsoFermented'), view2._getConfig('alsoFermented')
-    test.equal view2._getConfig('alsoFermented'), view3._getConfig('alsoFermented')
-    test.equal view3._getConfig('alsoFermented'), view4._getConfig('alsoFermented')
-    test.throws -> view1._getConfig('option2')
-    test.equal 'beer', view1._getConfig('option2', 'beer')
+    test.equal 'beer', view1._getConfig('alsoFermented'), 
+      "class defaults: prototype properties should also be considered 
+      possible config values"
+
+    test.equal 'kombucha', view2._getConfig('alsoFermented'), 
+      "class defaults: values passed via constructor config object arg 
+      should take precedence over prototype properties"
+
+    test.equal 'kombucha', view3._getConfig('alsoFermented'),
+      "delayed-binding: if the config value is specified as a function 
+      then the return value should be used as the actual config value"
+
+    # it should throw an error for an undefined config value
+    test.throws -> view1._getConfig 'flavor'
+
+    test.equal 'tangy', view1._getConfig('flavor', 'tangy'),
+      "it should return an argued default when the config value is undefined"
 
   Tinytest.add 'ReactiveView - event binding', (test) ->
 

@@ -9,23 +9,22 @@ class Configurable
 
 class ReactiveView
   _getConfig: (name, defaultValue) ->
-    _.result(this, name) or 
-      _.result(@options, name) or 
+    _.result(@config, name) or 
+      _.result(this, name) or 
       defaultValue or
       throw "ReactiveView wants a #{name}."
 
-  constructor: (@options = {}) ->
+  constructor: (@config = {}) ->
     view = this
     @_getConfig('template').rendered = ->
       view.templateInstance = this
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
-    @initialize(options)
+    @initialize(@config)
 
   initialize: ->
 
   $: (selector) ->
-    # @templateInstance.findAll(@buildBEMSelector(selector))
     @_getConfig('templateInstance').$(@buildEventSelector selector)
 
   _assignHelpersToTemplate: ->
