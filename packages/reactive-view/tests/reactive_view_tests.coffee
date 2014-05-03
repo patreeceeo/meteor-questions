@@ -65,20 +65,28 @@ if Meteor.isClient
   Tinytest.add 'ReactiveView - event binding', (test) ->
 
     eventHandled = false
+    otherEventHandled = false
 
     view = new KimchiView
       events:
         'click li.clickme': ->
           eventHandled = true
-
+        'keypress li.clickme': ->
+          otherEventHandled = true
 
     div = renderToDiv Template.listKimchis
     cleanUp = addToBody div
 
     $(div).find('li').click()
 
-    test.isTrue eventHandled
+    test.isTrue eventHandled, "it should take an events config object that is
+      used to attach event handlers to the template instance's DOM"
 
+    $(div).find('li').keypress()
+
+    test.isTrue otherEventHandled, "regression: make sure each event handler is 
+      properly bound to the corresponding event/selector"
+      
     cleanUp()
 
   Tinytest.add 'ReactiveView - helpers', (test) ->
