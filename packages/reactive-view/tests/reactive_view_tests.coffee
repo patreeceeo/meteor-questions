@@ -14,9 +14,9 @@ addToBody = (el) ->
 if Meteor.isClient
 
   Template.__define__ 'listKimchis', -> [
+    HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
+    HTML.Raw("<p>#{Spacebars.mustache @lookup 'description'}</p>")
     HTML.UL(
-      HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
-      HTML.Raw("<p>#{Spacebars.mustache @lookup 'description'}</p>")
       UI.Each @lookup('kimchis'), UI.block ->
         [HTML.Raw "<li>#{Spacebars.mustache @lookup 'name'}</li>"]
     )
@@ -41,13 +41,12 @@ if Meteor.isClient
   Tinytest.add 'ReactiveView - _getConfig()', (test) ->
     class BrewView extends KimchiView
       alsoFermented: 'beer'
-    class BrewView2 extends KimchiView
-      alsoFermented: -> 'beer'
+      callMe: -> 'hello'
 
-    view1 = new BrewView2
-    view2 = new BrewView2
+    view1 = new BrewView
+    view2 = new BrewView
       alsoFermented: 'kombucha'
-    view3 = new BrewView2
+    view3 = new BrewView
       alsoFermented: -> 'kombucha'
 
     test.equal 'beer', view1._getConfig('alsoFermented'), 
@@ -68,7 +67,9 @@ if Meteor.isClient
     test.equal 'tangy', view1._getConfig('flavor', 'tangy'),
       "it should return an argued default when the config value is undefined"
 
-  Tinytest.add 'ReactiveView - event binding', (test) ->
+    test.equal 'hello', view1._getConfig('callMe', '', callback: true)()
+
+  Tinytest.addAsync 'ReactiveView - event binding', (test, done) ->
 
     eventHandled = false
     otherEventHandled = false
@@ -91,6 +92,8 @@ if Meteor.isClient
 
       test.isTrue otherEventHandled, "regression: make sure each event handler is 
         properly bound to the corresponding event/selector"
+
+      done()
       
 
   Tinytest.add 'ReactiveView - helpers', (test) ->
@@ -117,5 +120,21 @@ if Meteor.isClient
       test.length view.$('h1'), 1
       test.length view.$('li'), 3
 
+  Tinytest.addAsync 'ReactiveView - elements', (test, done) ->
 
+    view = new KimchiView
+      els:
+        'list': 'ul'
+        'items': 'ul > li'
+      events:
+        'list': ->
+          eventHandled = true
+        'click title': ->
+          otherEventHandled = true
+      afterRendered: ->
+        test.length @$els.list, 1
+        test.length @$els.items, 3
+        done()
+
+    withTemplateInBody ->
 

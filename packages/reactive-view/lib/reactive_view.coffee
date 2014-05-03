@@ -1,24 +1,40 @@
 
 
 class ReactiveView
-  _getConfig: (name, defaultValue) ->
-    _.result(@config, name) or 
-      _.result(this, name) or 
-      defaultValue or
-      throw "ReactiveView wants a #{name}."
-
+  _getConfig: (name, defaultValue, {callback: isCallback} = {}) ->
+    error = Error "ReactiveView wants a #{name}."
+    if isCallback
+      @config[name] or @[name] or defaultValue or throw error
+    else
+      _.result(@config, name) or 
+        _.result(this, name) or 
+        defaultValue or
+        throw error
   constructor: (@config = {}) ->
     view = this
-    @_getConfig('template').rendered = ->
+    # view.template.isRendered = false
+    @_getConfig('template').rendered = (args...) ->
+      view.template.isRendered = true
       view.template.instance = this
+      view._cacheElementLists()
+      view._getConfig('afterRendered', ->)
+        .call(view)
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
+    _.defer ->
+      if view.template.isRendered
+        view._cacheElementLists()
+        view._getConfig('afterRendered', (->), callback: true)
+          .call(view)
     @initialize(@config)
 
   initialize: ->
 
   $: (selector) ->
     @template.instance.$(@buildEventSelector selector)
+
+  findAll: (selector) ->
+    @$(selector)
 
   _assignHelpersToTemplate: ->
     boundHelpers = {}
@@ -43,5 +59,14 @@ class ReactiveView
           # TODO: support strings as well as functions for callback value
           localFn.apply this, args
 
+    undefined
+
+
+  _cacheElementLists: ->
+    @$els ?= {}
+    for own key, value of @_getConfig('els', {})
+      @$els[key] = @$(value)
+
+    undefined
 
 
