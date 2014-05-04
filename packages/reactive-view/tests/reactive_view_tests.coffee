@@ -73,6 +73,15 @@ if Meteor.isClient
 
     test.equal 'hello', view1._getConfig('callMe', '', callback: true)()
 
+  # There's currently no way to unbind event handlers once bound to
+  # a template, so this test causes a subsequent test involving
+  # events to fail. Pend it for now since the other test also
+  # tests events.
+  #
+  # leads:
+  # Template.instance.dom.remove() destroys the template instance
+  # HandlerRec.prototype.unbind() directly unbinds a single
+  #   handler if its possible to get an instance
   xTinytest.addAsync 'ReactiveView - event binding', (test, done) ->
 
     eventHandled = false
