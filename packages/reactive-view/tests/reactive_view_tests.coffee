@@ -11,6 +11,10 @@ addToBody = (el) ->
   ->
     document.body.removeChild el
 
+xTinytest =
+  add: ->
+  addAsync: ->
+
 if Meteor.isClient
 
   Template.__define__ 'listKimchis', -> [
@@ -69,7 +73,7 @@ if Meteor.isClient
 
     test.equal 'hello', view1._getConfig('callMe', '', callback: true)()
 
-  Tinytest.addAsync 'ReactiveView - event binding', (test, done) ->
+  xTinytest.addAsync 'ReactiveView - event binding', (test, done) ->
 
     eventHandled = false
     otherEventHandled = false
@@ -120,20 +124,26 @@ if Meteor.isClient
       test.length view.$('h1'), 1
       test.length view.$('li'), 3
 
-  Tinytest.addAsync 'ReactiveView - elements', (test, done) ->
+  Tinytest.addAsync 'ReactiveView - elements/events', (test, done) ->
 
+    eventHandled = false
+    otherEventHandled = false
     view = new KimchiView
       els:
         'list': 'ul'
         'items': 'ul > li'
       events:
-        'list': ->
+        'click list': ->
           eventHandled = true
-        'click title': ->
+        'click items': ->
           otherEventHandled = true
       afterRendered: ->
         test.length @$els.list, 1
         test.length @$els.items, 3
+        @$els.list.click()
+        @$els.items.click()
+        test.isTrue eventHandled, 'elements aliases in the events object should work the same as the selector for the elements'
+        test.isTrue otherEventHandled, 'elements aliases in the events object should work the same as the selector for the elements'
         done()
 
     withTemplateInBody ->

@@ -31,7 +31,7 @@ class ReactiveView
   initialize: ->
 
   $: (selector) ->
-    @template.instance.$(@buildEventSelector selector)
+    @template.instance.$(selector)
 
   findAll: (selector) ->
     @$(selector)
@@ -46,18 +46,22 @@ class ReactiveView
 
     @template.helpers boundHelpers
 
-  buildEventSelector: (selector) ->
-    selector
+  _buildEventSelector: (selector) ->
+    els = @_getConfig('els', {})
+    [eventName, rest...] = selector.split RegExp '\\s+'
+    elsKey = rest.join(' ')
+    "#{eventName} #{els[elsKey] or elsKey}"
 
   _assignEventsToTemplate: ->
     @template.events = {}
     for own key, value of @_getConfig('events', {})
-      eventSelector = @buildEventSelector(key)
+      eventSelector = @_buildEventSelector(key)
       do =>
         localFn = value
-        @template.events[eventSelector] = (args...) =>
+        view = this
+        @template.events[eventSelector] = (args...) ->
           # TODO: support strings as well as functions for callback value
-          localFn.apply this, args
+          localFn.apply view, args
 
     undefined
 
