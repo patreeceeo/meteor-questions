@@ -53,18 +53,17 @@ class ReactiveView
     "#{eventName} #{els[elsKey] or elsKey}"
 
   _assignEventsToTemplate: ->
-    @template.events = {}
+    events = {}
     for own key, value of @_getConfig('events', {})
       eventSelector = @_buildEventSelector(key)
       do =>
         localFn = value
         view = this
-        @template.events[eventSelector] = (args...) ->
+        events[eventSelector] = (args...) ->
           # TODO: support strings as well as functions for callback value
           localFn.apply view, args
 
-    undefined
-
+    @template.events events
 
   _cacheElementLists: ->
     @$els ?= {}
