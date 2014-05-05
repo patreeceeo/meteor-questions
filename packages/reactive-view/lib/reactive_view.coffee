@@ -62,6 +62,7 @@ class ReactiveView
     _.defer ->
       sharedARLogic() if view.template.isRendered
 
+    @model ?= @_getConfig('model', null, optional: true)
     @initialize(@config)
 
   # Override to add initialization logic to a derived
@@ -78,15 +79,25 @@ class ReactiveView
 
   ### Internal ###
 
-  _getConfig: (name, defaultValue, {callback: isCallback} = {}) ->
+  _getConfig: (
+    name, 
+    defaultValue, 
+    {
+      callback: isCallback 
+      optional: isOptional
+    } = {}
+  ) ->
     error = Error "ReactiveView wants a #{name}."
-    if isCallback
-      @config[name] or @[name] or defaultValue or throw error
-    else
-      _.result(@config, name) or 
-        _.result(this, name) or 
-        defaultValue or
-        throw error
+    value = 
+      if isCallback
+        @config[name] or @[name] or defaultValue
+      else
+        _.result(@config, name) or 
+          _.result(this, name) or 
+          defaultValue
+    unless value? or isOptional
+      throw error
+    value
 
   _assignHelpersToTemplate: ->
     boundHelpers = {}

@@ -73,6 +73,12 @@ if Meteor.isClient
 
     test.equal 'hello', view1._getConfig('callMe', '', callback: true)()
 
+    test.isNull(view1._getConfig 'inconceivable', 
+        null, 
+        optional: true
+      "should allow null values if optional flag set"
+    )
+
   # There's currently no way to unbind event handlers once bound to
   # a template, so this test causes a subsequent test involving
   # events to fail. Pend it for now since the other test also
@@ -169,3 +175,14 @@ if Meteor.isClient
 
     withTemplateInBody ->
 
+  Tinytest.add 'ReactiveView - model', (test) ->
+    model = 
+      get: (name) ->
+        "#{name} value"
+      set: (name) ->
+
+    view = new KimchiView
+      model: model
+
+    test.equal view.model, model, "should make its model easy to access"
+  
