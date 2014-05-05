@@ -143,10 +143,11 @@ if Meteor.isClient
         'list': 'ul'
         'items': 'ul > li'
       events:
-        'click list': ->
-          eventHandled = true
+        'click list': 'onClickList'
         'click items': ->
           otherEventHandled = true
+      onClickList: ->
+        eventHandled = true
       afterRendered: ->
         test.length @$els.list, 1
         test.length @$els.items, 3

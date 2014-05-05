@@ -109,7 +109,11 @@ class ReactiveView
     for own key, value of @_getConfig('events', {})
       eventSelector = @_buildEventSelector(key)
       do =>
-        localFn = value
+        localFn = 
+        if _.isFunction(value)
+          value
+        else
+          @_getConfig(value, (->), callback: true)
         view = this
         events[eventSelector] = (args...) ->
           # TODO: support strings as well as functions for callback value
