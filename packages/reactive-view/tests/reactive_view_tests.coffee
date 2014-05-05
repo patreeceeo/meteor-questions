@@ -82,6 +82,7 @@ if Meteor.isClient
   # Template.instance.dom.remove() destroys the template instance
   # HandlerRec.prototype.unbind() directly unbinds a single
   #   handler if its possible to get an instance
+  # Use the template instance's $() to bind events
   xTinytest.addAsync 'ReactiveView - event binding', (test, done) ->
 
     eventHandled = false
