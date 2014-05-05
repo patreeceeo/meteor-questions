@@ -138,7 +138,7 @@ if Meteor.isClient
 
     eventHandled = false
     otherEventHandled = false
-    view = new KimchiView
+    new KimchiView
       els:
         'list': 'ul'
         'items': 'ul > li'
@@ -156,6 +156,16 @@ if Meteor.isClient
         test.isTrue eventHandled, 'elements aliases in the events object should work the same as the selector for the elements'
         test.isTrue otherEventHandled, 'elements aliases in the events object should work the same as the selector for the elements'
         done()
+
+    test.throws ->
+      new KimchiView 
+        events:
+          'click list': 'foo'
+
+    test.throws ->
+      new KimchiView
+        events:
+          'click list': {}
 
     withTemplateInBody ->
 

@@ -90,11 +90,8 @@ class ReactiveView
 
   _assignHelpersToTemplate: ->
     boundHelpers = {}
-    for key, fn of @_getConfig('helpers', {})
-      do =>
-        localFn = fn
-        boundHelpers[key] = (args...) =>
-          localFn.apply this, args
+    for own key, helper of @_getConfig('helpers', {})
+      boundHelpers[key] = _.bind(helper, this)
 
     @template.helpers boundHelpers
 
@@ -108,16 +105,17 @@ class ReactiveView
     events = {}
     for own key, value of @_getConfig('events', {})
       eventSelector = @_buildEventSelector(key)
-      do =>
-        localFn = 
+      handler = 
         if _.isFunction(value)
           value
-        else
-          @_getConfig(value, (->), callback: true)
-        view = this
-        events[eventSelector] = (args...) ->
-          # TODO: support strings as well as functions for callback value
-          localFn.apply view, args
+        else if _.isString(value)
+          @_getConfig(value, null, callback: true)
+
+      unless _.isFunction(handler)
+        throw Error "ReactiveView event maps must specify 
+                     handlers by method name or closure. Event '#{key}' is mapped to #{value}." 
+
+      events[eventSelector] = _.bind(handler, this)
 
     @template.events events
 
