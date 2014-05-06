@@ -25,7 +25,10 @@ class App.QuestionPosedView extends ReactiveView
     'click .QuestionPosed-submitButton': (event) ->
       answer = @$('.QuestionPosed-textarea').val()
 
-      @model.set 'answer', answer
+      @config.aModel.select(
+        answer: answer
+        _idQuestion: @model.get('_id')
+      ).insert()
 
     'click .QuestionPosed-resetButton': (event) ->
       @model.unset 'answer', answer
@@ -41,10 +44,10 @@ class App.QuestionPosedView extends ReactiveView
 
   helpers:
     answer: ->
-      @model.get 'answer'
+      @config.aModel.get 'answer'
 
     otherAnswers: ->
-      @model.get 'otherAnswers'
+      @config.aModel.otherAnswers()
 
     question: ->
       @model.get 'question'
@@ -60,11 +63,6 @@ class App.QuestionPosedView extends ReactiveView
 
 
   # load: (@options) ->
-    # @otherAnswers = App.AnswerCollection.find
-    #   $and: [
-    #     { _idQuestion: "#{options._idQuestion}" }
-    #     { _id: $ne: @newAnswerModel.get '_id' }
-    #   ]
 
 
       

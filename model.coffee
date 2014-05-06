@@ -10,6 +10,7 @@ class App.QuestionModel extends ReactiveModel
   defaults: 
     question: ''
 
+
 if Meteor.isServer
   Meteor.publish 'QuestionCollection', -> App.QuestionCollection.find()
 else
@@ -35,10 +36,16 @@ Answer =
   _idQuestion: String
   answer: String
 
-class App.AnswerModel extends App.Model
+class App.AnswerModel extends ReactiveModel
   collection: -> App.AnswerCollection
   defaults:
     answer: ''
+  otherAnswers: ->
+    @collection.find
+      $and: [
+        { _idQuestion: "#{@get '_idQuestion'}" }
+        { _id: $ne: @get '_id' }
+      ]
 
 if Meteor.isServer
   Meteor.publish 'AnswerCollection', -> App.AnswerCollection.find()

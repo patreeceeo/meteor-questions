@@ -11,6 +11,7 @@ App.routes =
     template: 'questionPosed'
     waitOn: ->
       App.qModel.select @params._idQuestion
+      App.aModel.select @params._idQuestion
       Meteor.subscribe 'QuestionCollection', @params._idQuestion
     # action: ->
     #   App.questionPosedView ?= new App.QuestionPosedView

@@ -65,6 +65,7 @@ class ReactiveModel
       @_setMany first, second
     else
       @_setOne first, second, third
+    this
 
   # Insert the wrapped document into the model's collection.
   #
@@ -73,7 +74,8 @@ class ReactiveModel
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
     @_insertCalled = true
-    document = _.defaults(_id: @_id, @defaults, @selector)
+    document = _.defaults(_id: @_id, @selector, @defaults)
+    debugger
     @collection.insert document
 
   # Get the whole wrapped document.
