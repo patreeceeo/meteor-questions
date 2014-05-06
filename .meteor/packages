@@ -10,4 +10,5 @@ handlebar-helpers
 iron-router
 blaze-layout
 
-bview
+reactive-view
+reactive-model

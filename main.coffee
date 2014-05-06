@@ -1,11 +1,11 @@
 
-window.App ?= {}
+this.App ?= {}
 
-App.qpModel = qpModel = new QuestionPosedModel
+App.qModel = qModel = new App.QuestionModel
 
 if Meteor.isClient
-  App.qpView = new QuestionPosedView
-    model: qpModel
+  App.qpView = new App.QuestionPosedView
+    model: qModel
 
 Router.map ->
   for own key, value of App.routes

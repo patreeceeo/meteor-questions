@@ -1,14 +1,17 @@
 
 
-window.App ?= {}
+this.App ?= {}
 
 App.routes = 
   index:
     path: '/'
     template: 'index'
   questionPosed:
-    path: 'list/:_idList/questions/:_idQuestion/posed'
+    path: 'questions/:_idQuestion/posed'
     template: 'questionPosed'
+    waitOn: ->
+      App.qModel.select @params._idQuestion
+      Meteor.subscribe 'QuestionCollection', @params._idQuestion
     # action: ->
     #   App.questionPosedView ?= new App.QuestionPosedView
     #   App.questionPosedView.load

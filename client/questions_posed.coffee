@@ -19,61 +19,35 @@
 #     App.QuestionCollection.find()
 
 
-class App.QuestionPosedView extends View
+class App.QuestionPosedView extends ReactiveView
   template: Template.questionPosed
   events:
-    answerQuestion:
-      event: 'click'
-      block: 'QuestionPosed'
-      element: 'submitButton'
-      callback: (event) ->
-        answer = @find(
-          block: 'QuestionPosed'
-          element: 'textarea'
-        ).val()
+    'click .QuestionPosed-submitButton': (event) ->
+      answer = @$('.QuestionPosed-textarea').val()
 
-        @newAnswerModel.set 
-          answer: answer, 
-          _idQuestion: @questionModel.get('_id')
+      @model.set 'answer', answer
 
-    resetQuestion:
-      event: 'click'
-      block: 'QuestionPosed'
-      element: 'resetButton'
-      callback: (event) ->
-        @newAnswerModel.remove()
+    'click .QuestionPosed-resetButton': (event) ->
+      @model.unset 'answer', answer
 
-    nextQuestion:
-      event: 'click'
-      block: 'QuestionPosed'
-      element: 'nextButton'
-      callback: (event) ->
-        Router.go 'questionPosed',
-          _idList: 0
-          _idQuestion: @options._idQuestion + 1
+    'click .QuestionPosed-nextButton': (event) ->
+      nQuestions = App.QuestionCollection.find().count()
+      Router.go 'questionPosed',
+        _idQuestion: Math.min nQuestions, parseInt(@model.get('_id')) + 1
 
-    prevQuestion:
-      event: 'click'
-      block: 'QuestionPosed'
-      element: 'prevButton'
-      callback: (event) ->
-        if @options._idQuestion > 0
-          Router.go 'questionPosed',
-            _idList: 0
-            _idQuestion: @options._idQuestion - 1
+    'click .QuestionPosed-prevButton': (event) ->
+      Router.go 'questionPosed',
+        _idQuestion: Math.max 0, parseInt(@model.get('_id')) - 1
 
-  dataHelpers:
-    newAnswer: ->
-      @dep.depend()
-      @newAnswerModel.get 'answer'
+  helpers:
+    answer: ->
+      @model.get 'answer'
 
     otherAnswers: ->
-      @otherAnswers
+      @model.get 'otherAnswers'
 
     question: ->
-      @dep.depend()
-      @questionModel.get 'question'
-
+      @model.get 'question'
 
     answerPlaceholder: ->
       [
@@ -84,23 +58,15 @@ class App.QuestionPosedView extends View
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
-  initialize: (@options = {}) ->
-    @options._idList ?= 0
-    @options._idQuestion ?= 0
-    @dep = new Deps.Dependency
-    @load(@options)
 
-  load: (@options) ->
-    @questionModel = new App.QuestionModel options._idQuestion
-    @newAnswerModel = new App.AnswerModel options._idQuestion
-    @otherAnswers = App.AnswerCollection.find
-      $and: [
-        { _idQuestion: "#{options._idQuestion}" }
-        { _id: $ne: @newAnswerModel.get '_id' }
-      ]
+  # load: (@options) ->
+    # @otherAnswers = App.AnswerCollection.find
+    #   $and: [
+    #     { _idQuestion: "#{options._idQuestion}" }
+    #     { _id: $ne: @newAnswerModel.get '_id' }
+    #   ]
 
 
-    @dep.changed()
       
 
 Meteor.startup ->
