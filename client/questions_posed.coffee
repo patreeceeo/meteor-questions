@@ -9,7 +9,7 @@ class App.QuestionPosedView extends ReactiveView
         answer: answer
 
     'click .QuestionPosed-resetButton': (event) ->
-      @model.unset 'answer', answer
+      @config.aModel.remove()
 
     'click .QuestionPosed-nextButton': (event) ->
       nQuestions = App.QuestionCollection.find().count()
