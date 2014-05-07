@@ -40,6 +40,8 @@ class ReactiveModel
           @_dep.changed()
           @observation.stop()
 
+    @initialize?()
+
   # Set the value of one or multiple fields in the modeled
   # document.
   #
@@ -75,8 +77,12 @@ class ReactiveModel
   insert: (options = {}) ->
     @_insertCalled = true
     document = _.defaults(_id: @_id, @selector, @defaults)
-    debugger
     @collection.insert document
+
+  inset: (first, second, third) ->
+    unless @inserted()
+      @insert()
+    @set first, second, third
 
   # Get the whole wrapped document.
   #
@@ -91,7 +97,9 @@ class ReactiveModel
   #
   # Returns the value associated with `key`
   get: (key) ->
-    @getAll()?[key]
+    @getAll()?[key] or 
+      _.isObject(@selector) and @selector[key] or 
+      undefined
 
   # Test whether the wrapped document has been inserted yet.
   #
@@ -108,14 +116,19 @@ class ReactiveModel
   select: (newSelector) ->
     unless EJSON.equals @selector, newSelector
       @_dep.changed()
-      @selector = newSelector
       @_id =
-        if _.isNumber(@selector)
-          "#{@selector}"
-        else if _.isString(@selector)
-          @selector
+        if _.isNumber(newSelector)
+          "#{newSelector}"
+        else if _.isString(newSelector)
+          newSelector
         else
-          @collection.findOne(@selector)?._id or Random.id()
+          @collection.findOne(newSelector)?._id or Random.id()
+
+      @selector = 
+        if _.isNumber(newSelector) or _.isString(newSelector)
+          _id: newSelector
+        else
+          newSelector
     this
 
   # Remove the wrapped document from the collection.

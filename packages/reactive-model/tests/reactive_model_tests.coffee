@@ -51,6 +51,9 @@ if Meteor.isClient
     test.equal kimchi.get('origin'), 'Korea',
       "kimchi 0's origin should immediately be set to Korea"
 
+    kimchi2 = new Kimchi name: 'bob'
+    test.equal kimchi2.get('name'), 'bob', 'should be able to get fields before the document is inserted'
+
     
   Tinytest.addAsync 'ReactiveModel - reactivity', (test, done) ->
     callCount = 0

@@ -1,34 +1,12 @@
 
-
-
-# Template.questionPosed.events
-#   'keydown textarea': (event) ->
-#     if (event.which || event.keyCode) is 13
-#       answer = $(event.target).val()
-#       _idQuestion = $(event.target).data().idQuestion
-
-#       App.addAnswer answer, _idQuestion
-
-# Template.questionPosed.helpers
-#   questionAnswered: ->
-#     App.AnswerCollection.find().map (answer) ->
-#       answer.question = App.QuestionCollection.findOne(answer._idQuestion)?.question or "WAT>?"
-#       answer
-
-#   questionPosed: ->
-#     App.QuestionCollection.find()
-
-
 class App.QuestionPosedView extends ReactiveView
   template: Template.questionPosed
   events:
     'click .QuestionPosed-submitButton': (event) ->
       answer = @$('.QuestionPosed-textarea').val()
 
-      @config.aModel.select(
+      @config.aModel.inset
         answer: answer
-        _idQuestion: @model.get('_id')
-      ).insert()
 
     'click .QuestionPosed-resetButton': (event) ->
       @model.unset 'answer', answer
@@ -61,8 +39,7 @@ class App.QuestionPosedView extends ReactiveView
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
-
-  # load: (@options) ->
+  initialize: ->
 
 
       
