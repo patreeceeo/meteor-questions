@@ -1,4 +1,8 @@
-
+# IDEAS
+# Add `helpers` config that can be used to define domain specific
+# methods, kinda like Theorist's behaviors. These helpers would
+# then automatically be made helpers of a view using the 
+# corresponding model.
 
 
 class ReactiveModel
@@ -31,7 +35,7 @@ class ReactiveModel
 
     @select(selector)
 
-    @_update @defaults
+    @_update @_getConfig 'defaults'
 
     @observation = @collection.find(selector).observe
       added: (doc) =>
@@ -69,6 +73,9 @@ class ReactiveModel
       @_setOne first, second, third
     this
 
+  _localDocument: ->
+    _.defaults(_id: @_id, @selector, @_getConfig 'defaults')
+
   # Insert the wrapped document into the model's collection.
   #
   # options - an options {Object} (optional)
@@ -76,8 +83,7 @@ class ReactiveModel
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
     @_insertCalled = true
-    document = _.defaults(_id: @_id, @selector, @defaults)
-    @collection.insert document
+    @collection.insert @_localDocument()
 
   inset: (first, second, third) ->
     unless @inserted()
@@ -89,7 +95,7 @@ class ReactiveModel
   # Returns an {Object}
   getAll: ->
     @_dep.depend()
-    @collection.findOne(@_id)
+    @collection.findOne(@_id) or @_localDocument()
 
   # Get one field of the wrapped document.
   #
@@ -97,15 +103,13 @@ class ReactiveModel
   #
   # Returns the value associated with `key`
   get: (key) ->
-    @getAll()?[key] or 
-      _.isObject(@selector) and @selector[key] or 
-      undefined
+    @getAll()?[key] #or 
 
   # Test whether the wrapped document has been inserted yet.
   #
   # Returns a {Boolean}
   inserted: ->
-    @getAll()?
+    @collection.findOne(@_id)?
 
   # Wrap the first document that matches given selector, 
   # potentially changing which document is being wrapped.
@@ -158,5 +162,24 @@ class ReactiveModel
       !!@collection.update @_id, 
         $set: document, options
 
+  _getConfig: (
+    name, 
+    defaultValue, 
+    {
+      callback: isCallback 
+      optional: isOptional
+    } = {}
+  ) ->
+    error = Error "ReactiveView wants a #{name}."
+    value = 
+      if isCallback
+        @config[name] or @[name] or defaultValue
+      else
+        _.result(@config, name) or 
+          _.result(this, name) or 
+          defaultValue
+    unless value? or isOptional
+      throw error
+    value
 
 

@@ -29,37 +29,3 @@ Meteor.startup ->
       true
 
 
-App.AnswerCollection = new Meteor.Collection 'AnswerCollection'
-
-Answer =
-  _id: String
-  _idQuestion: String
-  answer: String
-
-class App.AnswerModel extends ReactiveModel
-  collection: -> App.AnswerCollection
-  defaults:
-    answer: ''
-  otherAnswers: ->
-    @collection.find
-      $and: [
-        { _idQuestion: "#{@get '_idQuestion'}" }
-        { _id: $ne: @get '_id' }
-      ]
-
-if Meteor.isServer
-  Meteor.publish 'AnswerCollection', -> App.AnswerCollection.find()
-else
-  Meteor.subscribe 'AnswerCollection'
-
-Meteor.startup ->
-  App.AnswerCollection.allow
-    insert: (_idUser, document) ->
-      check(document, Answer)
-      true
-    update: (_idUser, document) ->
-      check(document, Answer)
-      true
-    remove: (_idUser, document) ->
-      check(document, Answer)
-      true

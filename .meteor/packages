@@ -12,5 +12,6 @@ blaze-layout
 
 reactive-view
 reactive-model
+answer-model
 accounts-facebook
 accounts-ui
