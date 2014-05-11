@@ -52,11 +52,12 @@ class ReactiveModel
   # {::set} can be called two ways: one-off and 
   # bulk.
   #
+  # ## Example
   #
-  # Examples
-  #
+  # ```coffee
   #   model.set('flavor', 'turkish');
   #   model.set({flavor: 'turkish', price: 4});
+  # ```
   #
   #
   # first - one-off: a {String} is the key for the field to set.

@@ -117,6 +117,16 @@
       <ul class='summary'>
   <li>
     <span class='signature'>
+      <a href='#_localDocument-instance'>
+        ::<strong>_localDocument</strong>()
+      </a>
+    </span>
+    <span class='desc'>
+      
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
       <a href='#constructor-instance'>
         ::<strong>constructor</strong>(selector)
       </a>
@@ -163,6 +173,16 @@
     </span>
     <span class='desc'>
       Test whether the wrapped document has been inserted yet.
+    </span>
+  </li>
+  <li>
+    <span class='signature'>
+      <a href='#inset-instance'>
+        ::<strong>inset</strong>(first, second, third)
+      </a>
+    </span>
+    <span class='desc'>
+      
     </span>
   </li>
   <li>
@@ -223,10 +243,19 @@
       <h2>Instance Method Details</h2>
       <div class='methods'>
   <div class='method_details'>
+    <p class='signature' id='_localDocument-instance'>
+      ::<strong>_localDocument</strong>()
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L72'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='get-instance'>
       ::<strong>get</strong>(key)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L84'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L100'>Source</a>
     </p>
     <div class='docstring'>
   <p>Get one field of the wrapped document.</p>
@@ -254,7 +283,7 @@
     <p class='signature' id='getAll-instance'>
       Object ::<strong>getAll</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L75'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L91'>Source</a>
     </p>
     <div class='docstring'>
   <p>Get the whole wrapped document.</p>
@@ -275,7 +304,7 @@
     <p class='signature' id='insert-instance'>
       ::<strong>insert</strong>(options = {})
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L67'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L79'>Source</a>
     </p>
     <div class='docstring'>
   <p>Insert the wrapped document into the model&#39;s collection.</p>
@@ -303,7 +332,7 @@
     <p class='signature' id='inserted-instance'>
       Boolean ::<strong>inserted</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L90'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L106'>Source</a>
     </p>
     <div class='docstring'>
   <p>Test whether the wrapped document has been inserted yet.</p>
@@ -321,10 +350,19 @@
 </div>
   </div>
   <div class='method_details'>
+    <p class='signature' id='inset-instance'>
+      ::<strong>inset</strong>(first, second, third)
+      <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L84'>Source</a>
+    </p>
+    <div class='tags'>
+</div>
+  </div>
+  <div class='method_details'>
     <p class='signature' id='remove-instance'>
       ::<strong>remove</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L115'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L136'>Source</a>
     </p>
     <div class='docstring'>
   <p>Remove the wrapped document from the collection.</p>
@@ -343,7 +381,7 @@
     <p class='signature' id='select-instance'>
       ::<strong>select</strong>(newSelector)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L99'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L115'>Source</a>
     </p>
     <div class='docstring'>
   <p>Wrap the first document that matches given selector,  potentially changing which document is being wrapped.</p>
@@ -371,31 +409,34 @@
     <p class='signature' id='set-instance'>
       ::<strong>set</strong>(first, second, third)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_model.coffee#L56'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_model.coffee#L64'>Source</a>
     </p>
     <div class='docstring'>
   <p>Set the value of one or multiple fields in the modeled document.</p><p><a href='../classes/ReactiveModel.html#set-instance'>::set</a> can be called two ways: one-off and 
-bulk.</p>
-  <div class='examples'>
-    <h3>Examples:</h3>
-    <h4>
-      
-    </h4>
-    <pre><code class='coffee'></code></pre>
-    <h4>
-      
-    </h4>
-    <pre><code class='coffee'></code></pre>
-  </div>
+bulk.</p><h2 id="example">Example</h2>
+<pre><code class="lang-coffee">model.set(&#39;flavor&#39;, &#39;turkish&#39;);
+model.set({flavor: &#39;turkish&#39;, price: 4});
+</code></pre><p>first - one-off: a <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> is the key for the field to set.
+      bulk: an <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> is the key/value pairs to overwrite part or all of the document with.
+second - one-off: any value that will become the field value.
+       bulk: <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> options.
+third - one-off: <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Object'>Object</a> options.</p>
 </div>
 <div class='tags'>
+  <h3>Returns:</h3>
+  <ul class='return'>
+    <li>
+      <span class='type'></span>
+      <span class='desc'>Returns true if changes were propagated to the database</span>
+    </li>
+  </ul>
 </div>
   </div>
 </div>
     </div>
     <div id='footer'>
   Generated on
-  Tue Apr 29 2014 21:09:53 GMT-0700 (PDT)
+  Sat May 10 2014 20:26:22 GMT-0700 (PDT)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.1.1

@@ -21,8 +21,9 @@
 #          Backbone.View, the names ({String}s) of instance 
 #          methods may be used instead of actual {Function}s.
 #
-# Examples
+# ## Example
 #
+# ```coffee
 #   class GameView extends ReactiveView
 #     template: Template.game
 #     els: 
@@ -34,6 +35,7 @@
 #       'keypress board': (event) ->
 #         if enterKeyPress(event)
 #           @tryMove(event)
+# ```
 #       
 class ReactiveView
 

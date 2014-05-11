@@ -130,14 +130,20 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
          name from the <code>els</code> object instead of the corresponding
          DOM selector <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a> (see Examples). Like with
          Backbone.View, the names (<a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/String'>String</a>s) of instance 
-         methods may be used instead of actual <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>s.</p>
-  <div class='examples'>
-    <h3>Examples:</h3>
-    <h4>
-      
-    </h4>
-    <pre><code class='coffee'></code></pre>
-  </div>
+         methods may be used instead of actual <a href='https://developer.mozilla.org/en-US/docs/JavaScript/Reference/Global_Objects/Function'>Function</a>s.</p><h2 id="example">Example</h2>
+<pre><code class="lang-coffee">  class GameView extends ReactiveView
+    template: Template.game
+    els: 
+      board: &#39;.js-gb&#39;
+      playersLetters: &#39;.js-gbletters&#39;
+      scoreboard: &#39;#score&#39;
+    events:
+      &#39;click board&#39;: &#39;tryMove&#39;
+      &#39;keypress board&#39;: (event) -&gt;
+        if enterKeyPress(event)
+          @tryMove(event)
+</code></pre>
+
 </div>
 <div class='tags'>
 </div>
@@ -180,7 +186,7 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
       </a>
     </span>
     <span class='desc'>
-      Override initialize to add initialization logic to a derived class
+      Override to add initialization logic to a derived class
     </span>
   </li>
 </ul>
@@ -190,7 +196,7 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
     <p class='signature' id='constructor-instance'>
       ::<strong>constructor</strong>(config = {})
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_view.coffee#L46'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_view.coffee#L48'>Source</a>
     </p>
     <div class='docstring'>
   <p>Constructor</p>
@@ -214,7 +220,7 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
     <p class='signature' id='$-instance'>
       ::<strong>$</strong>(selector)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_view.coffee#L72'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_view.coffee#L75'>Source</a>
     </p>
     <div class='docstring'>
   <p>A shortcut for the template instance&#39;s $</p>
@@ -226,7 +232,7 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
     <p class='signature' id='findAll-instance'>
       ::<strong>findAll</strong>(selector)
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_view.coffee#L76'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_view.coffee#L79'>Source</a>
     </p>
     <div class='docstring'>
   <p>Another name for <a href='../classes/ReactiveView.html#$-instance'>ReactiveView::$</a></p>
@@ -238,10 +244,10 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
     <p class='signature' id='initialize-instance'>
       ::<strong>initialize</strong>()
       <a class='gh-link' href='https:&#47;&#47;github.com&#47;pzatrick&#47;meteor-questions
-&#47;blob&#47;master/lib&#47;reactive_view.coffee#L69'>Source</a>
+&#47;blob&#47;master/lib&#47;reactive_view.coffee#L72'>Source</a>
     </p>
     <div class='docstring'>
-  <p>Override initialize to add initialization logic to a derived class</p>
+  <p>Override to add initialization logic to a derived class</p>
 </div>
 <div class='tags'>
 </div>
@@ -250,7 +256,7 @@ events - Like <a href="http://docs.meteor.com/#template_events">template events<
     </div>
     <div id='footer'>
   Generated on
-  Sun May 04 2014 20:53:09 GMT-0700 (PDT)
+  Sat May 10 2014 20:27:38 GMT-0700 (PDT)
   by
   <a href='https://github.com/gjtorikian/biscotto' title='TomDoc-CoffeeScript API documentation generator'>Biscotto</a>
   v2.1.1
