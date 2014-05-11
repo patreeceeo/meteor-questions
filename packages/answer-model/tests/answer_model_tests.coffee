@@ -7,8 +7,6 @@ xTinytest =
   add: ->
   addAsync: ->
 
-
-
 Meteor.userId = ->
   'faceb00b'
 
@@ -23,7 +21,7 @@ if Meteor.isClient
   for doc in arr
     collection.insert doc
 
-  xTinytest.add 'AnswerModel - otherAnswers()', (test) ->
+  Tinytest.add 'AnswerModel - otherAnswers()', (test) ->
 
     model = new AnswerModel _idUser: '0', _idQuestion: '0'
 
@@ -36,7 +34,7 @@ if Meteor.isClient
       same question'
 
 
-  xTinytest.add 'AnswerModel - default _idUser', (test) ->
+  Tinytest.add 'AnswerModel - default _idUser', (test) ->
 
     model = new AnswerModel()
 
@@ -47,18 +45,7 @@ if Meteor.isClient
 
     model = new AnswerModel
     model.select _idQuestion: '3', answer: 'Bikini Bottom'
+    test.isTrue model.wantsAnswer()
     model.insert().then ->
-
-      model.select _idQuestion: '3', answer: 'Myrtle Beach'
-      model.insert().then ->
-
-        cursor = App.AnswerCollection.find(
-          _idQuestion: '3'
-          _idUser: Meteor.userId()
-        )
-
-        test.equal cursor.count(), 1,
-          'should not allow more than one answer per user per question'
-        
-        test.equal cursor.fetch()[0].answer, 'Myrtle Beach'
+      test.isFalse model.wantsAnswer()
 

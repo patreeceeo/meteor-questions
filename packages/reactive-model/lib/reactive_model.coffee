@@ -7,6 +7,17 @@
 
 class ReactiveModel
 
+  class Thenable
+    constructor: (resolver) ->
+      resolver(@_resolve, @_reject)
+    then: (@_succeed, @_fail) ->
+    _resolve: (val) ->
+      @_succeed?(val)
+    _reject: (val) ->
+      @_fail?(val)
+
+  this.Promise ?= Thenable
+
   ### Public ###
 
   # You must override `collection` with a 
@@ -77,22 +88,13 @@ class ReactiveModel
   _localDocument: ->
     _.defaults(_id: @_id, @selector, @_getConfig 'defaults')
 
-  class Thenable
-    constructor: (resolver) ->
-      resolver(@_resolve, @_reject)
-    then: (@_succeed, @_fail) ->
-    _resolve: (val) ->
-      @_succeed?(val)
-    _reject: (val) ->
-      @_fail?(val)
-
   # Insert the wrapped document into the model's collection.
   #
   # options - an options {Object} (optional)
   #
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
-    new Thenable (resolve, reject) =>
+    new Promise (resolve, reject) =>
       @_insertCalled = true
       @collection.insert @_localDocument(), (error, result) ->
         if error?

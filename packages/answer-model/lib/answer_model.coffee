@@ -13,20 +13,18 @@ class AnswerModel extends ReactiveModel
         { _idQuestion: "#{@get '_idQuestion'}" }
         { _id: $ne: @get '_id' }
       ]
-  # submit: (_idQuestion, answer) ->
+  wantsAnswer: ->
+    not @collection.findOne(
+      _idQuestion: @get '_idQuestion'
+      _idUser: @get '_idUser'
+    )?
+
 
 Answer =
   _id: String
   _idQuestion: String
   _idUser: String
   answer: String
-
-# check = (obj, spec) ->
-#   for own key, value of spec
-#     unless _.isString(obj[key])
-#       throw "AnswerModel's #{key} must be a String"
-
-# check = ->
 
 if Meteor.isServer
   Meteor.publish 'AnswerCollection', -> App.AnswerCollection.find()
@@ -37,10 +35,7 @@ Meteor.startup ->
   App.AnswerCollection.allow
     insert: (_idUser, document) ->
       check(document, Answer)
-      not App.AnswerCollection.findOne(
-        _idQuestion: document._idQuestion
-        _idUser: document._idUser
-      )?
+      true
     update: (_idUser, document) ->
       check(document, Answer)
       true
