@@ -77,23 +77,28 @@ class ReactiveModel
   _localDocument: ->
     _.defaults(_id: @_id, @selector, @_getConfig 'defaults')
 
+  class Thenable
+    constructor: (resolver) ->
+      resolver(@_resolve, @_reject)
+    then: (@_succeed, @_fail) ->
+    _resolve: (val) ->
+      @_succeed?(val)
+    _reject: (val) ->
+      @_fail?(val)
+
   # Insert the wrapped document into the model's collection.
   #
   # options - an options {Object} (optional)
   #
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
-    @_insertCalled = true
-    [succeed, fail] = []
-    promise = then: (s, f) ->
-      succeed = s
-      fail = f
-    @collection.insert @_localDocument(), (error, result) ->
-      if error?
-        fail?(error)
-      else
-        succeed?(result)
-    promise
+    new Thenable (resolve, reject) =>
+      @_insertCalled = true
+      @collection.insert @_localDocument(), (error, result) ->
+        if error?
+          resolve(error)
+        else
+          reject(result)
 
   inset: (first, second, third) ->
     unless @inserted()
