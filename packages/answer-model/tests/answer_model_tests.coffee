@@ -1,11 +1,16 @@
-
 collection = App.AnswerCollection
+
 if Meteor.isServer
   collection.remove({})
 
 xTinytest =
   add: ->
   addAsync: ->
+
+
+
+Meteor.userId = ->
+  'faceb00b'
 
 if Meteor.isClient
   arr = [
@@ -18,7 +23,7 @@ if Meteor.isClient
   for doc in arr
     collection.insert doc
 
-  Tinytest.add 'AnswerModel - otherAnswers()', (test) ->
+  xTinytest.add 'AnswerModel - otherAnswers()', (test) ->
 
     model = new AnswerModel _idUser: '0', _idQuestion: '0'
 
@@ -31,21 +36,29 @@ if Meteor.isClient
       same question'
 
 
-  Tinytest.add 'AnswerModel - default _idUser', (test) ->
-
-    Meteor.userId = ->
-      'faceb00b'
+  xTinytest.add 'AnswerModel - default _idUser', (test) ->
 
     model = new AnswerModel()
 
     test.equal model.get('_idUser'), 'faceb00b', 
       'should default to the current user ID'
 
-  Tinytest.add 'AnswerModel - submit()', (test) ->
+  Tinytest.add 'AnswerModel - submitting answers', (test) ->
 
-    model = new AnswerModel()
+    model = new AnswerModel
+    model.select _idQuestion: '3', answer: 'Bikini Bottom'
+    model.insert().then ->
 
-    model.submit '0', 'Cape Horn'
+      model.select _idQuestion: '3', answer: 'Myrtle Beach'
+      model.insert().then ->
 
-    
+        cursor = App.AnswerCollection.find(
+          _idQuestion: '3'
+          _idUser: Meteor.userId()
+        )
+
+        test.equal cursor.count(), 1,
+          'should not allow more than one answer per user per question'
+        
+        test.equal cursor.fetch()[0].answer, 'Myrtle Beach'
 

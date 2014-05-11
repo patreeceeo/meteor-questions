@@ -84,7 +84,16 @@ class ReactiveModel
   # Returns the unique _id of the inserted document
   insert: (options = {}) ->
     @_insertCalled = true
-    @collection.insert @_localDocument()
+    [succeed, fail] = []
+    promise = then: (s, f) ->
+      succeed = s
+      fail = f
+    @collection.insert @_localDocument(), (error, result) ->
+      if error?
+        fail?(error)
+      else
+        succeed?(result)
+    promise
 
   inset: (first, second, third) ->
     unless @inserted()

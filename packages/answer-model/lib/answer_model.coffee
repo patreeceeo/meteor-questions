@@ -36,9 +36,11 @@ else
 Meteor.startup ->
   App.AnswerCollection.allow
     insert: (_idUser, document) ->
-      console.log 'document', document
       check(document, Answer)
-      true
+      not App.AnswerCollection.findOne(
+        _idQuestion: document._idQuestion
+        _idUser: document._idUser
+      )?
     update: (_idUser, document) ->
       check(document, Answer)
       true
