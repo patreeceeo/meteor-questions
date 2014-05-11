@@ -40,17 +40,21 @@
 class ReactiveView
 
   ### Public ###
+
+  getTemplateInstance: ->
+    ReactiveView._templateInst[@template.cid]
   
   # Constructor
   #
   # config - an {Object} which may contain any of the extension 
   #          points documented in the {ReactiveView} overview
   constructor: (@config = {}) ->
-    view = this
     @template.isRendered ?= false
+    view = this
     @template.rendered = ->
-      debugger
-      view.template.instance = this
+      view.template.cid = Random.id()
+      ReactiveView._templateInst ?= {}
+      ReactiveView._templateInst[view.template.cid] = this
       view.template.isRendered = true
 
     @viewHelper = (args...) ->
@@ -76,7 +80,7 @@ class ReactiveView
   $: (selector) ->
     # `@template.instance` will be undefined if the template has
     # not rendered yet.
-    @template.instance?.$(selector)
+    @getTemplateInstance().$(selector)
 
   # Another name for {ReactiveView::$}
   findAll: (selector) ->

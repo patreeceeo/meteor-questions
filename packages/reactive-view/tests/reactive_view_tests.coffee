@@ -162,17 +162,18 @@ if Meteor.isClient
         test.isTrue otherEventHandled, 'elements aliases in the events object should work the same as the selector for the elements'
         done()
 
-    test.throws ->
-      new KimchiView 
-        events:
-          'click list': 'foo'
-
-    test.throws ->
-      new KimchiView
-        events:
-          'click list': {}
-
     withTemplateInBody ->
+
+      test.throws ->
+        new KimchiView 
+          events:
+            'click list': 'foo'
+
+      test.throws ->
+        new KimchiView
+          events:
+            'click list': {}
+
 
   Tinytest.add 'ReactiveView - model', (test) ->
     model = 
