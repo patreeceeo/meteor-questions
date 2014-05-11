@@ -46,23 +46,24 @@ class ReactiveView
   # config - an {Object} which may contain any of the extension 
   #          points documented in the {ReactiveView} overview
   constructor: (@config = {}) ->
-    sharedARLogic = =>
-      @_cacheElementLists()
-      @_getConfig('afterRendered', (->), callback: true)
-        .call(this)
-
     view = this
     @template.isRendered ?= false
-    @_getConfig('template').rendered = (args...) ->
+    @template.rendered = ->
+      debugger
       view.template.instance = this
       view.template.isRendered = true
-      sharedARLogic()
+
+    @viewHelper = (args...) ->
+      _.defer =>
+        @_cacheElementLists()
+        @_getConfig('afterRendered', (->), callback: true)
+          .call(this)
+      undefined
 
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
 
-    _.defer ->
-      sharedARLogic() if view.template.isRendered
+    @viewHelper()
 
     @model ?= @_getConfig('model', null, optional: true)
     @initialize(@config)
@@ -73,7 +74,9 @@ class ReactiveView
 
   # A shortcut for the template instance's $
   $: (selector) ->
-    @template.instance.$(selector)
+    # `@template.instance` will be undefined if the template has
+    # not rendered yet.
+    @template.instance?.$(selector)
 
   # Another name for {ReactiveView::$}
   findAll: (selector) ->
@@ -104,7 +107,10 @@ class ReactiveView
   _assignHelpersToTemplate: ->
     boundHelpers = {}
     for own key, helper of @_getConfig('helpers', {})
-      boundHelpers[key] = _.bind(helper, this)
+      view = this
+      boundHelpers[key] = _.wrap helper, (helper) =>
+        @viewHelper()
+        helper.call(this)
 
     @template.helpers boundHelpers
 

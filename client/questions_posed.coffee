@@ -1,22 +1,28 @@
 
 class App.QuestionPosedView extends ReactiveView
   template: Template.questionPosed
+  els:
+    answerInput: 'textarea.js-answer'
+    answerButton: 'button.js-answer'
+    resetButton: 'button.js-reset'
+    prevButton: 'button.js-prev'
+    nextButton: 'button.js-next'
   events:
-    'click .QuestionPosed-submitButton': (event) ->
-      answer = @$('.QuestionPosed-textarea').val()
+    'click answerButton': (event) ->
+      answer = @$els.answerInput.val()
 
       @config.aModel.inset
         answer: answer
 
-    'click .QuestionPosed-resetButton': (event) ->
+    'click resetButton': (event) ->
       @config.aModel.remove()
 
-    'click .QuestionPosed-nextButton': (event) ->
+    'click nextButton': (event) ->
       nQuestions = App.QuestionCollection.find().count()
       Router.go 'questionPosed',
         _idQuestion: Math.min nQuestions, parseInt(@model.get('_id')) + 1
 
-    'click .QuestionPosed-prevButton': (event) ->
+    'click prevButton': (event) ->
       Router.go 'questionPosed',
         _idQuestion: Math.max 0, parseInt(@model.get('_id')) - 1
 

@@ -89,7 +89,7 @@ if Meteor.isClient
   # HandlerRec.prototype.unbind() directly unbinds a single
   #   handler if its possible to get an instance
   # Use the template instance's $() to bind events
-  xTinytest.addAsync 'ReactiveView - event binding', (test, done) ->
+  Tinytest.add 'ReactiveView - event binding', (test) ->
 
     eventHandled = false
     otherEventHandled = false
@@ -113,7 +113,6 @@ if Meteor.isClient
       test.isTrue otherEventHandled, "regression: make sure each event handler is 
         properly bound to the corresponding event/selector"
 
-      done()
       
 
   Tinytest.add 'ReactiveView - helpers', (test) ->
