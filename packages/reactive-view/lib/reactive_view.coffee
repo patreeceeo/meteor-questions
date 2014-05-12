@@ -39,11 +39,10 @@
 #       
 class ReactiveView
 
-  ### Public ###
+  @_templateInst ?= {}
 
-  getTemplateInstance: ->
-    ReactiveView._templateInst[@template.cid]
-  
+  ### Public ###
+ 
   # Constructor
   #
   # config - an {Object} which may contain any of the extension 
@@ -52,17 +51,11 @@ class ReactiveView
     @template.isRendered ?= false
     view = this
     @template.rendered = ->
-      view.template.cid = Random.id()
-      ReactiveView._templateInst ?= {}
-      ReactiveView._templateInst[view.template.cid] = this
+      ReactiveView._templateInst[view.template.guid] = this
       view.template.isRendered = true
-
-    @viewHelper = (args...) ->
-      _.defer =>
-        @_cacheElementLists()
-        @_getConfig('afterRendered', (->), callback: true)
-          .call(this)
-      undefined
+      view._getConfig('afterRendered', (->), callback: true)
+        .call(this)
+      view.viewHelper()
 
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
@@ -72,15 +65,23 @@ class ReactiveView
     @model ?= @_getConfig('model', null, optional: true)
     @initialize(@config)
 
+  viewHelper: ->
+    _.defer =>
+      @_cacheElementLists()
+    undefined
+
+  getTemplateInstance: ->
+    ReactiveView._templateInst[@template.guid]
+
   # Override to add initialization logic to a derived
   # class
   initialize: ->
 
   # A shortcut for the template instance's $
   $: (selector) ->
-    # `@template.instance` will be undefined if the template has
-    # not rendered yet.
-    @getTemplateInstance().$(selector)
+    # Won't have a template instance until the template has
+    # rendered.
+    @getTemplateInstance()?.$(selector)
 
   # Another name for {ReactiveView::$}
   findAll: (selector) ->
@@ -96,7 +97,7 @@ class ReactiveView
       optional: isOptional
     } = {}
   ) ->
-    error = Error "ReactiveView wants a #{name}."
+    error = Error "ReactiveView wants a(n) #{name}."
     value = 
       if isCallback
         @config[name] or @[name] or defaultValue
