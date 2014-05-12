@@ -125,6 +125,8 @@ class ReactiveView
     elsKey = rest.join(' ')
     "#{eventName} #{els[elsKey] or elsKey}"
 
+  # TODO: Figure out how to re-assign event handlers to template.
+  #       Perhaps binding via jQuery would work.
   _assignEventsToTemplate: ->
     events = {}
     for own key, value of @_getConfig('events', {})
