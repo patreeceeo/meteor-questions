@@ -4,15 +4,15 @@
   <div class='QuestionPosed'>
     {{#if question}}
       <p>{{question}}</p>
-      {{#each otherAnswers}}
-        <p>{{this.answer}}</p>
-      {{/each}}
       {{#if answer}}
+        {{#each otherAnswers}}
+          <p>{{this.answer}}</p>
+        {{/each}}
         <p>{{answer}}</p>
         <button class='Button js-reset'>Reset</button>
       {{else}}
-      <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
-        <button class='Button js-answer'>Answer</button>
+        <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
+          <button class='Button js-answer'>Answer</button>
       {{/if}}
     {{else}}
       The End!

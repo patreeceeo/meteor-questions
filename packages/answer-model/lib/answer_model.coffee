@@ -20,11 +20,6 @@ class AnswerModel extends ReactiveModel
     )?
 
 
-Answer =
-  _id: String
-  _idQuestion: String
-  _idUser: String
-  answer: String
 
 if Meteor.isServer
   Meteor.publish 'AnswerCollection', -> App.AnswerCollection.find()
@@ -32,6 +27,13 @@ else
   Meteor.subscribe 'AnswerCollection'
 
 Meteor.startup ->
+  Answer =
+    _id: String
+    _idQuestion: String
+    _idUser: String
+    answer: Match.Where (s) ->
+      check s, String
+      s.trim() > ''
   App.AnswerCollection.allow
     insert: (_idUser, document) ->
       check(document, Answer)
