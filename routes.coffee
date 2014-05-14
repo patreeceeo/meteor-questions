@@ -7,8 +7,12 @@ App.routes =
     path: '/'
     template: 'index'
     layoutTemplate: 'layout'
+  listQuestions:
+    path: 'list/:_idList'
+    template: 'listQuestions'
+    layoutTemplate: 'layout'
   questionPosed:
-    path: 'questions/:_idQuestion/posed'
+    path: 'question/:_idQuestion/posed'
     template: 'questionPosed'
     layoutTemplate: 'layout'
     waitOn: ->

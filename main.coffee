@@ -9,6 +9,8 @@ if Meteor.isClient
     model: qModel
     aModel: aModel
 
+  App.lqView = new App.ListQuestionsView
+
 Router.map ->
   for own key, value of App.routes
     @route key, value
