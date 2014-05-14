@@ -13,11 +13,12 @@ class App.ListQuestionsView extends ReactiveView
       if @$els.masonry > []
         _.defer =>
           width = @_getConfig('columnWidth')
+          @$els.questions.width(width)
+
+          @masonry?.destroy()
 
           @masonry = new Masonry @$els.masonry[0],
             itemSelector: '.js-question'
             columnWidth: width
-
-          @$els.questions.width(width)
 
       App.QuestionCollection.find().fetch()
