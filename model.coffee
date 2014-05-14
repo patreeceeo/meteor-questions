@@ -28,4 +28,7 @@ Meteor.startup ->
       check(document, Question)
       true
 
+  if Meteor.isServer and 
+      App.QuestionCollection.find().count() is 0
+    App.bootstrap()
 
