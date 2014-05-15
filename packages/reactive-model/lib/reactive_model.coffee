@@ -93,19 +93,19 @@ class ReactiveModel
   # options - an options {Object} (optional)
   #
   # Returns the unique _id of the inserted document
-  insert: (options = {}) ->
+  insert: (document = @_localDocument(), options = {}) ->
     new Promise (resolve, reject) =>
       @_insertCalled = true
-      @collection.insert @_localDocument(), (error, result) ->
+      @collection.insert document, (error, result) ->
         if error?
           resolve(error)
         else
           reject(result)
 
-  inset: (first, second, third) ->
+  inset: (document) ->
     unless @inserted()
-      @insert()
-    @set first, second, third
+      @insert _.defaults document, @_localDocument()
+    @set document
 
   # Get the whole wrapped document.
   #
@@ -174,10 +174,10 @@ class ReactiveModel
 
     @_update hash, options
 
-  _update: (document, options = {}) ->
+  _update: (doc, options = {}) ->
     if @collection.findOne(@_id)? 
       !!@collection.update @_id, 
-        $set: document, options
+        $set: doc, options
 
   _getConfig: (
     name, 

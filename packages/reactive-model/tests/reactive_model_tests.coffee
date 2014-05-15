@@ -151,6 +151,21 @@ TODO: figure out why this is being called more than twice
 
     test.isTrue kimchi.inserted()
 
+  Tinytest.addAsync 'ReactiveModel - inset() 
+      convenience method', (test, done) ->
+    kimchi = new Kimchi 'noexist'
+
+    Deps.autorun ->
+      name = kimchi.get('name')
+      if kimchi.inserted() and name?
+        test.equal name, 'da best'
+        done()
+
+    kimchi.inset(name: 'da best') unless kimchi.inserted()
+
+    test.isTrue kimchi.inserted()
+
+
   Tinytest.add 'ReactiveModel - defaults', (test) ->
 
     Kimchis.insert name: 'kimchi kimchi'
