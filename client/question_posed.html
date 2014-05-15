@@ -1,5 +1,4 @@
 
-
 <template name='questionPosed'>
   <div class='QuestionPosed'>
     {{#if question}}
@@ -12,13 +11,15 @@
         <button class='Button js-reset'>Reset</button>
       {{else}}
         <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
-          <button class='Button js-answer'>Answer</button>
+          <button class='Button--primary js-answer'>Answer</button>
       {{/if}}
     {{else}}
       The End!
     {{/if}}
-    <button class='Button js-prev'>Prev</button>
-    <button class='Button js-next'>Next</button>
+    <button class='Button--secondary js-prev'>Prev</button>
+    <a class='Button--secondary js-more'
+      href='{{pathFor "listQuestions" _idList=0}}'>More</a>
+    <button class='Button--secondary js-next'>Next</button>
   </div>
 </template>
 

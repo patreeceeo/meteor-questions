@@ -71,7 +71,7 @@ opacity-Button-disabled = 0.6
 
 .Button:hover
 .Button:focus
-.Button:active 
+.Button:active
   text-decoration: none
 
 
@@ -82,4 +82,14 @@ opacity-Button-disabled = 0.6
 
 .Button--primary
   @extend .Button
-  background: tomato
+  background: lightcoral
+
+.Button--secondary
+  @extend .Button
+  background: palegoldenrod
+
+
+.Button--secondary:hover 
+.Button--secondary:focus
+.Button--secondary:active
+  @extend .Button:hover
