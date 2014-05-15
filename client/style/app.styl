@@ -6,6 +6,9 @@ rounded-corners(radius)
   border-radius: radius /* future proofing */
   -khtml-border-radius: radius /* for old Konqueror browsers */
 
+html, body
+  height: 100%
+
 .QuestionTable
   background: #333
 
@@ -38,4 +41,8 @@ rounded-corners(radius)
 .u-gridColumnMargin
   margin: .75rem
 
-
+/* This depends on BODY and HTML having a height of 100% */
+.u-fillViewport
+  display: block
+  position: relative
+  height: 100%

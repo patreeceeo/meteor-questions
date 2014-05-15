@@ -1,18 +1,20 @@
 
 <template name='questionPosed'>
-  <div class='QuestionPosed'>
+  <div class='QuestionTable u-fillViewport'>
     {{#if question}}
-      <p>{{question}}</p>
-      {{#if answer}}
-        {{#each otherAnswers}}
-          <p>{{this.answer}}</p>
-        {{/each}}
-        <p>{{answer}}</p>
-        <button class='Button js-reset'>Reset</button>
-      {{else}}
-        <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
-          <button class='Button--primary js-answer'>Answer</button>
-      {{/if}}
+      <div class='QuestionCard'>
+        <p>{{question}}</p>
+        {{#if answer}}
+          {{#each otherAnswers}}
+            <p>{{this.answer}}</p>
+          {{/each}}
+          <p>{{answer}}</p>
+          <button class='Button js-reset'>Reset</button>
+        {{else}}
+          <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
+            <button class='Button--primary js-answer'>Answer</button>
+        {{/if}}
+      </div>
     {{else}}
       The End!
     {{/if}}
