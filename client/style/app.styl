@@ -1,5 +1,3 @@
-body
-  background: #333
 
 rounded-corners(radius)
   -moz-border-radius: radius
@@ -7,10 +5,31 @@ rounded-corners(radius)
   border-radius: radius /* future proofing */
   -khtml-border-radius: radius /* for old Konqueror browsers */
 
+.QuestionTable
+  background: #333
+
 .QuestionCard
+  rounded-corners(5px)
+  display: block
+  text-decoration: none
+  color: inherit
   background: Ivory
   padding: .75rem
-  rounded-corners(5px)
+  position: relative
+  .QuestionCard-answerButton
+    color: white
+    display: none
+    position: absolute
+    right: .5em
+    bottom: .5em
+    z-index: 1
+
+
+.QuestionCard:hover
+  text-decoration: none;
+  .QuestionCard-answerButton
+    display: block;
+
 
 .u-gridColumnWidth
   /* See ListQuestionsView::columnWidth */

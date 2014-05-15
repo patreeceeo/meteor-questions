@@ -1,10 +1,12 @@
 <template name='listQuestions'>
-  <div class='js-masonry'>
+  <div class='js-masonry QuestionTable'>
     {{#each questions}}
     <div class='js-question'>
-      <div class='QuestionCard u-gridColumnMargin u-isActionable'>
+      <a class='QuestionCard u-gridColumnMargin u-isActionable'
+        href='{{pathFor "questionPosed" _idQuestion=_id}}'>
         {{question}}
-      </div>
+        <button class='QuestionCard-answerButton Button--primary'>answer!</button>
+      </a>
     </div>
     {{/each}}
   </div>

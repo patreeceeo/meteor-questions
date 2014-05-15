@@ -1,10 +1,13 @@
+#TODO: consider whether to create individual question 
+#      view/template.
 
 class App.ListQuestionsView extends ReactiveView
   template: Template.listQuestions
 
   els:
     masonry: '.js-masonry'
-    questions: '.js-question'
+    questionWrapper: '.js-question'
+    question: '.js-question .u-isActionable'
 
   columnWidth: '24rem'
 
@@ -13,7 +16,7 @@ class App.ListQuestionsView extends ReactiveView
       if @$els.masonry > []
         _.defer =>
           width = @_getConfig('columnWidth')
-          @$els.questions.width(width)
+          @$els.questionWrapper.width(width)
 
           @masonry?.destroy()
 
@@ -21,3 +24,5 @@ class App.ListQuestionsView extends ReactiveView
             itemSelector: '.js-question'
 
       App.QuestionCollection.find().fetch()
+
+
