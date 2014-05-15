@@ -1,27 +1,37 @@
 
 <template name='questionPosed'>
   <div class='QuestionTable u-fillViewport'>
-    {{#if question}}
-      <div class='QuestionCard u-inlineBlock u-pageMargin'>
-        <p>{{question}}</p>
-        {{#if answer}}
-          {{#each otherAnswers}}
-            <p>{{this.answer}}</p>
-          {{/each}}
-          <p>{{answer}}</p>
-          <button class='Button js-reset'>Reset</button>
-        {{else}}
-          <p><textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea></p>
-            <button class='Button--primary js-answer'>Answer</button>
-        {{/if}}
-      </div>
-    {{else}}
-      The End!
-    {{/if}}
-    <button class='Button--secondary js-prev'>Prev</button>
-    <a class='Button--secondary js-more'
-      href='{{pathFor "listQuestions" _idList=0}}'>More</a>
-    <button class='Button--secondary js-next'>Next</button>
+    <div class="Page u-pageMargin u-inlineBlock">
+      {{#if question}}
+        <p>
+          <button class='Button--secondary js-prev'>Prev</button>
+          <a class='Button--secondary js-more'
+            href='{{pathFor "listQuestions" _idList=0}}'>More</a>
+          <button class='Button--secondary js-next'>Next</button>
+        </p>
+        <p>
+          <div class='QuestionCard'>
+            <p>{{question}}</p>
+            {{#if answer}}
+              {{#each otherAnswers}}
+                <p>{{this.answer}}</p>
+              {{/each}}
+              <p>{{answer}}</p>
+              <div class='u-cf'>
+                <button class='Button--secondary js-reset u-pullRight'>Reset</button>
+              </div>
+            {{else}}
+              <p><textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea></p>
+              <div class='u-cf'>
+                <button class='Button--primary js-answer u-pullRight'>Answer</button>
+              </div>
+            {{/if}}
+          </div>
+        </p>
+      {{else}}
+        The End!
+      {{/if}}
+    </div>
   </div>
 </template>
 
