@@ -6,7 +6,7 @@ class App.ListQuestionsView extends ReactiveView
     masonry: '.js-masonry'
     questions: '.js-question'
 
-  columnWidth: 200
+  columnWidth: '24rem'
 
   helpers:
     questions: ->
@@ -19,6 +19,5 @@ class App.ListQuestionsView extends ReactiveView
 
           @masonry = new Masonry @$els.masonry[0],
             itemSelector: '.js-question'
-            columnWidth: width
 
       App.QuestionCollection.find().fetch()

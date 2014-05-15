@@ -2,7 +2,9 @@
   <div class='js-masonry'>
     {{#each questions}}
     <div class='js-question'>
-      {{question}}
+      <div class='QuestionCard u-gridColumnMargin u-isActionable'>
+        {{question}}
+      </div>
     </div>
     {{/each}}
   </div>
