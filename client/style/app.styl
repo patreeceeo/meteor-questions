@@ -6,9 +6,6 @@ rounded-corners(radius)
   border-radius: radius /* future proofing */
   -khtml-border-radius: radius /* for old Konqueror browsers */
 
-html, body
-  height: 100%
-
 .QuestionTable
   background: #333
 
@@ -27,7 +24,8 @@ html, body
     right: .5em
     bottom: .5em
     z-index: 1
-
+  .QuestionCard-answerInput
+    width: 100%
 
 .QuestionCard:hover
   text-decoration: none;
@@ -40,6 +38,9 @@ html, body
 
 .u-gridColumnMargin
   margin: .75rem
+
+.u-pageMargin
+  margin: 1rem
 
 /* This depends on BODY and HTML having a height of 100% */
 .u-fillViewport

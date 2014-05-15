@@ -2,7 +2,7 @@
 <template name='questionPosed'>
   <div class='QuestionTable u-fillViewport'>
     {{#if question}}
-      <div class='QuestionCard'>
+      <div class='QuestionCard u-inlineBlock u-pageMargin'>
         <p>{{question}}</p>
         {{#if answer}}
           {{#each otherAnswers}}
@@ -11,7 +11,7 @@
           <p>{{answer}}</p>
           <button class='Button js-reset'>Reset</button>
         {{else}}
-          <textarea class='js-answer' placeholder="{{answerPlaceholder}}"></textarea>
+          <p><textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea></p>
             <button class='Button--primary js-answer'>Answer</button>
         {{/if}}
       </div>

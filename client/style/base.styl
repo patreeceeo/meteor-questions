@@ -1,0 +1,85 @@
+/*! suit-base v0.4.0 | MIT License | github.com/suitcss */
+
+/* ===========================================================
+   Base
+   =========================================================== */
+
+background-base = inherit
+color-base = inherit
+font-base = 16px sans-serif
+link-color-base = #069
+link-color-hover-base = link-color-base
+
+/**
+ * A thin layer on top of normalize.css that provides a starting point more
+ * suitable for web applications. Removes the default spacing and border for
+ * appropriate elements.
+ */
+
+html
+  background: background-base
+  color: color-base
+  font: font-base
+
+
+a
+  color: link-color-base
+  text-decoration: none
+
+
+a:hover,
+a:focus,
+a:active
+  color: link-color-hover-base
+  text-decoration: underline
+
+
+blockquote,
+dl,
+dd,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+figure,
+pre
+  margin: 0
+
+p
+  margin: 0 0 1rem 0
+
+
+button
+  background: transparent
+  border: 0
+  padding: 0
+
+
+fieldset
+  border: 0
+  margin: 0
+  padding: 0
+
+
+iframe
+  border: 0
+
+
+ol,
+ul
+  margin: 0
+  list-style: none
+  padding: 0
+
+
+/**
+ * Suppress the focus outline on links that cannot be accessed via keyboard.
+ * This prevents an unwanted focus outline from appearing around elements that
+ * might still respond to pointer events.
+ */
+
+[tabindex="-1"]:focus
+  outline: none !important
+
