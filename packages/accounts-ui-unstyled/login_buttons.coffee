@@ -2,12 +2,6 @@
 # for convenience
 loginButtonsSession = Accounts._loginButtonsSession
 
-# shared between dropdown and single mode
-Template.loginButtons.events
-  'click #login-buttons-logout': ->
-    Meteor.logout ->
-      loginButtonsSession.closeDropdown()
-
 UI.registerHelper 'loginButtons', ->
   throw new Error "Use {{> loginButtons}} instead of {{loginButtons}}"
 
@@ -74,14 +68,14 @@ Accounts.ui.dropdown = ->
 #
 # XXX these will become configurable, and will be validated on
 # the server as well.
-validateUsername = (username) ->
+Accounts.ui.validateUsername = (username) ->
   if username.length >= 3 
     true
   else
     loginButtonsSession.errorMessage("Username must be at least 3 characters long");
     false
 
-validateEmail = (email) ->
+Accounts.ui.validateEmail = (email) ->
   if passwordSignupFields() is "USERNAME_AND_OPTIONAL_EMAIL" and email is ''
     return true
 
@@ -91,69 +85,10 @@ validateEmail = (email) ->
     loginButtonsSession.errorMessage("Invalid email")
     return false
 
-validatePassword = (password) ->
+Accounts.ui.validatePassword = (password) ->
   if password.length >= 6
     return true
   else
     loginButtonsSession.errorMessage("Password must be at least 6 characters long")
     return false
-
-#
-# loginButtonLoggedOut template
-#
-
-Template._loginButtonsLoggedOut.dropdown = Accounts.ui.dropdown
-
-Template._loginButtonsLoggedOut.services = Accounts.ui.getLoginServices
-
-Template._loginButtonsLoggedOut.singleService = ->
-  services = Accounts.ui.getLoginServices()
-  if services.length isnt 1
-    throw new Error "Shouldn't be rendering this template 
-      with more than one configured service"
-  return services[0]
-
-
-Template._loginButtonsLoggedOut.configurationLoaded = ->
-  return Accounts.loginServicesConfigured()
-
-
-
-#
-# loginButtonsLoggedIn template
-#
-
-# decide whether we should show a dropdown rather than a row of
-# buttons
-Template._loginButtonsLoggedIn.dropdown = Accounts.ui.dropdown
-
-
-
-#
-# loginButtonsLoggedInSingleLogoutButton template
-#
-
-Template._loginButtonsLoggedInSingleLogoutButton.displayName = Accounts.ui.displayName
-Template._loginButtonsLoggedInSingleLogoutButton.profilePicture = Accounts.ui.profilePicture
-
-
-
-#
-# loginButtonsMessage template
-#
-
-Template._loginButtonsMessages.errorMessage = ->
-  return loginButtonsSession.get 'errorMessage'
-
-
-Template._loginButtonsMessages.infoMessage = ->
-  return loginButtonsSession.get 'infoMessage'
-
-
-
-#
-# loginButtonsLoggingInPadding template
-#
-
-Template._loginButtonsLoggingInPadding.dropdown = Accounts.ui.dropdown
 

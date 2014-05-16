@@ -6,7 +6,6 @@ Package.on_use(function (api) {
   api.use(
     [
       'deps',
-      'service-configuration',
       'accounts-base',
       'underscore',
       'templating',
@@ -18,6 +17,8 @@ Package.on_use(function (api) {
   // Export Accounts (etc) to packages using this one.
   api.imply('accounts-base', ['client', 'server']);
 
+  api.imply('service-configuration', ['client']);
+
   // Allow us to call Accounts.oauth.serviceNames, if there are any OAuth
   // services.
   api.use('accounts-oauth', {weak: true});
@@ -25,19 +26,22 @@ Package.on_use(function (api) {
   // Accounts.oauth.registerService) exists.
   api.use('accounts-password', {weak: true});
 
+  // The following files have been moved out of the 
+  // package and into the app (sophie) in order to
+  // make it easier to have a consistently styled UI
+  // 'login_buttons_single.html',
+  // 'login_buttons_dropdown.html',
+  // 'login_buttons.html',
+  // 'login_buttons_single.js',
+  // 'login_buttons_dropdown.js',
   api.add_files([
     'accounts_ui.js',
 
-    'login_buttons.html',
-    'login_buttons_single.html',
-    'login_buttons_dropdown.html',
     'login_buttons_dialogs.html',
 
     'login_buttons_session.js',
 
     'login_buttons.coffee',
-    'login_buttons_single.js',
-    'login_buttons_dropdown.js',
     'login_buttons_dialogs.js'], 'client');
 });
 
