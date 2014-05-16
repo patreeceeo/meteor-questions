@@ -3,8 +3,18 @@ Package.describe({
 });
 
 Package.on_use(function (api) {
-  api.use(['deps', 'service-configuration', 'accounts-base',
-           'underscore', 'templating', 'session'], 'client');
+  api.use(
+    [
+      'deps',
+      'service-configuration',
+      'accounts-base',
+      'underscore',
+      'templating',
+      'session',
+      'coffeescript'
+    ], 
+    'client'
+    );
   // Export Accounts (etc) to packages using this one.
   api.imply('accounts-base', ['client', 'server']);
 
@@ -25,7 +35,7 @@ Package.on_use(function (api) {
 
     'login_buttons_session.js',
 
-    'login_buttons.js',
+    'login_buttons.coffee',
     'login_buttons_single.js',
     'login_buttons_dropdown.js',
     'login_buttons_dialogs.js'], 'client');

@@ -26,7 +26,7 @@ Template._loginButtonsLoggedInDropdown.events({
   }
 });
 
-Template._loginButtonsLoggedInDropdown.displayName = displayName;
+Template._loginButtonsLoggedInDropdown.displayName = Accounts.ui.displayName;
 
 Template._loginButtonsLoggedInDropdown.inChangePasswordFlow = function () {
   return loginButtonsSession.get('inChangePasswordFlow');
@@ -163,7 +163,7 @@ Template._loginButtonsLoggedOutDropdown.events({
 
 // additional classes that can be helpful in styling the dropdown
 Template._loginButtonsLoggedOutDropdown.additionalClasses = function () {
-  if (!hasPasswordService()) {
+  if (!Accounts.ui.hasPasswordService()) {
     return false;
   } else {
     if (loginButtonsSession.get('inSignupFlow')) {
@@ -180,21 +180,21 @@ Template._loginButtonsLoggedOutDropdown.dropdownVisible = function () {
   return loginButtonsSession.get('dropdownVisible');
 };
 
-Template._loginButtonsLoggedOutDropdown.hasPasswordService = hasPasswordService;
+Template._loginButtonsLoggedOutDropdown.hasPasswordService = Accounts.ui.hasPasswordService;
 
 // return all login services, with password last
-Template._loginButtonsLoggedOutAllServices.services = getLoginServices;
+Template._loginButtonsLoggedOutAllServices.services = Accounts.ui.getLoginServices;
 
 Template._loginButtonsLoggedOutAllServices.isPasswordService = function () {
   return this.name === 'password';
 };
 
 Template._loginButtonsLoggedOutAllServices.hasOtherServices = function () {
-  return getLoginServices().length > 1;
+  return Accounts.ui.getLoginServices().length > 1;
 };
 
 Template._loginButtonsLoggedOutAllServices.hasPasswordService =
-  hasPasswordService;
+  Accounts.ui.hasPasswordService;
 
 Template._loginButtonsLoggedOutPasswordService.fields = function () {
   var loginFields = [

@@ -19,4 +19,5 @@ Tinytest.add('accounts-ui - config validates keys', function (test) {
   test.throws(function () {
     Accounts.ui.config({requestPermissions: {facebook: "not an array"}});
   });
+
 });

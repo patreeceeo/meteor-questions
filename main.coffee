@@ -5,6 +5,10 @@ App.qModel = qModel = new App.QuestionModel
 App.aModel = aModel = new App.AnswerModel
 
 if Meteor.isServer
+  # Need to publish 'services' field to 'userData' because it
+  # isn't published by default and its needed to get stuff
+  # like the profile picture for the current user from 
+  # Meteor.user()
   Meteor.publish "userData", ->
     Meteor.users.find @userId, fields: services: 1
 
