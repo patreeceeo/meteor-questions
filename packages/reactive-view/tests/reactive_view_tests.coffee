@@ -153,7 +153,7 @@ if Meteor.isClient
           otherEventHandled = true
       onClickList: ->
         eventHandled = true
-      afterRendered: ->
+      rendered: ->
         test.length @$els.list, 1
         test.length @$els.items, 3
         @$els.list.click()

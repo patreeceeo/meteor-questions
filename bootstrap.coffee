@@ -58,6 +58,7 @@ questions = [
   "What do you love?  Have any of your recent actions openly expressed this love?"
   "In 5 years from now, will you remember what you did yesterday?  What about the day before that?  Or the day before that?"
   "Decisions are being made right now.  The question is:  Are you making them for yourself, or are you letting others make them for you?"
+  "What is the air-speed velocity of an unladen swallow?"
   ]
 
 

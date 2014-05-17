@@ -7,7 +7,7 @@
 # {ReactiveView} offers the following extension points to derived
 # classes:
 # template - a [Meteor template object](http://docs.meteor.com/#templates_api)
-# afterRendered - a callback, will be called immediately if the
+# rendered - a callback, will be called immediately if the
 #                 template has already rendered
 # helpers - [template helpers](http://docs.meteor.com/#template_helpers)
 # els - an {Object} mapping names to DOM selector {String}s, a 
@@ -49,13 +49,15 @@ class ReactiveView
   #          points documented in the {ReactiveView} overview
   constructor: (@config = {}) ->
     @template.isRendered ?= false
+    @template.destroyed = 
+      @_getConfig('destroyed', (->), callback: true)
     view = this
     @template.rendered = ->
       ReactiveView._templateInst[view.template.guid] = this
       view.template.isRendered = true
-      view._getConfig('afterRendered', (->), callback: true)
-        .call(this)
       view.viewHelper()
+      view._getConfig('rendered', (->), callback: true)
+        .call(this)
 
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
@@ -68,6 +70,7 @@ class ReactiveView
   viewHelper: ->
     _.defer =>
       @_cacheElementLists()
+      @_getConfig('ready', (->), callback: true).call(this)
     undefined
 
   getTemplateInstance: ->
