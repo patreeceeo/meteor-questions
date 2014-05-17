@@ -13,16 +13,18 @@ class App.ListQuestionsView extends ReactiveView
 
   helpers:
     questions: ->
-      if @$els.masonry > []
+      cursor = App.QuestionCollection.find()
+      if cursor.count() > 0
         _.defer =>
-          width = @_getConfig('columnWidth')
-          @$els.questionWrapper.width(width)
+          if @$els.masonry > []
+            width = @_getConfig('columnWidth')
+            @$els.questionWrapper.width(width)
 
-          @masonry?.destroy()
+            @masonry?.destroy()
 
-          @masonry = new Masonry @$els.masonry[0],
-            itemSelector: '.js-question'
+            @masonry = new Masonry @$els.masonry[0],
+              itemSelector: '.js-question'
 
-      App.QuestionCollection.find().fetch()
+      cursor
 
 

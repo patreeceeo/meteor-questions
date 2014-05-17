@@ -20,11 +20,11 @@ Template._loginButtonsLoggedOut.singleService = ->
   if services.length isnt 1
     throw new Error "Shouldn't be rendering this template 
       with more than one configured service"
-  return services[0]
+  services[0]
 
 
 Template._loginButtonsLoggedOut.configurationLoaded = ->
-  return Accounts.loginServicesConfigured()
+  Accounts.loginServicesConfigured()
 
 
 
