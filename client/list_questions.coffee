@@ -16,6 +16,8 @@ class App.ListQuestionsView extends ReactiveView
       cursor = App.QuestionCollection.find()
       if cursor.count() > 0
         _.defer =>
+          # TODO: figure out how to put this logic into a separate
+          #       callback
           if @$els.masonry > []
             width = @_getConfig('columnWidth')
             @$els.questionWrapper.width(width)
