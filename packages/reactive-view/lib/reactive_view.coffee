@@ -62,15 +62,12 @@ class ReactiveView
     @_assignEventsToTemplate()
     @_assignHelpersToTemplate()
 
-    @viewHelper()
-
     @model ?= @_getConfig('model', null, optional: true)
     @initialize(@config)
 
   viewHelper: ->
     _.defer =>
       @_cacheElementLists()
-      @_getConfig('ready', (->), callback: true).call(this)
     undefined
 
   getTemplateInstance: ->
