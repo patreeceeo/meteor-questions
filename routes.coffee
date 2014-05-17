@@ -7,6 +7,10 @@ App.routes =
     path: '/'
     template: 'index'
     layoutTemplate: 'layout'
+  about:
+    path: '/about'
+    template: 'about'
+    layoutTemplate: 'layout'
   listQuestions:
     path: 'list/:_idList'
     template: 'listQuestions'
