@@ -44,7 +44,19 @@ Template._loginButtonsLoggedIn.dropdown = Accounts.ui.dropdown
 
 Template._loginButtonsLoggedInSingleLogoutButton.displayName = Accounts.ui.displayName
 Template._loginButtonsLoggedInSingleLogoutButton.profilePicture = Accounts.ui.profilePicture
-
+Template._loginButtonsLoggedInSingleLogoutButton.greeting = ->
+  [
+    "Hello,"
+    "Hola,"
+    "Bonjour,"
+    "Aloha,"
+    "こんにちは (Kon'nichiwa)、"
+    "你好 (Nǐ hǎo),"
+    "Guten Tag,"
+    "नमस्ते (Namastē),"
+    "Dia duit,"
+    "Алло (Allo),"
+  ][Math.floor(Math.random() * 10)]
 
 
 #
