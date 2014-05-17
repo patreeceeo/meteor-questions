@@ -17,7 +17,7 @@ Package.on_use(function (api) {
   // Export Accounts (etc) to packages using this one.
   api.imply('accounts-base', ['client', 'server']);
 
-  api.imply('service-configuration', ['client']);
+  api.imply('service-configuration', ['client', 'server']);
 
   // Allow us to call Accounts.oauth.serviceNames, if there are any OAuth
   // services.

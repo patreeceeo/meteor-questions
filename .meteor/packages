@@ -15,5 +15,8 @@ reactive-model
 answer-model
 accounts-facebook
 
+# TODO: Figure out why bringing service-configuration in using `api.imply` 
+#       isn't working in accounts-ui.
+service-configuration
 accounts-ui
 stylus

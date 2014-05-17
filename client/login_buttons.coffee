@@ -6,7 +6,6 @@ Template.loginButtons.events
     Meteor.logout ->
       loginButtonsSession.closeDropdown()
 
-
 #
 # loginButtonLoggedOut template
 #
