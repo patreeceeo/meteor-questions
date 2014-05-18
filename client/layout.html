@@ -1,5 +1,5 @@
 <template name='layout'>
-  <div class='NavBar u-cf'>
+  <div class='NavBar u-cf u-posFixedTop'>
     <a class='NavBar-item'
       href="{{pathFor 'index'}}">GoSophie</a>
     <a class='NavBar-item u-navSpacingLeft'
@@ -12,5 +12,8 @@
       {{> loginButtons}}
     </a>
   </div>
+  {{! A staticly positioned NavBar so that the real NavBar 
+      doesn't cover up the content }}
+  <div class='NavBar'></div>
   {{> yield}}
 </template>
