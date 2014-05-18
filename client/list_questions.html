@@ -1,7 +1,7 @@
 <template name="listQuestions">
   <div class="js-masonry QuestionTable">
     {{#each questions}}
-    <div class="js-question Brick">
+    <div class="js-question Brick u-sizeFitViewport">
       <a class="QuestionCard u-gridColumnMargin"
         href="{{pathFor 'questionPosed' _idQuestion=_id}}">
         {{question}}

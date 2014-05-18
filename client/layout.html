@@ -1,16 +1,18 @@
 <template name='layout'>
   <div class='NavBar u-cf u-posFixedTop'>
-    <a class='NavBar-item'
-      href="{{pathFor 'index'}}">GoSophie</a>
-    <a class='NavBar-item u-navSpacingLeft'
-      href="{{pathFor 'listQuestions' _idList=0}}">play!</a>
-    <a class='NavBar-item u-navSpacingLeft'
-      href="{{pathFor 'about'}}">about</a>
     <a class='NavBar-item u-pullRight'
       href="{{pathFor 'profile' _idUser=userId}}"
       >
       {{> loginButtons}}
     </a>
+    <div class="u-pullLeft">
+      <a class='NavBar-item'
+        href="{{pathFor 'index'}}">GoSophie</a>
+      <a class='NavBar-item u-navSpacingLeft'
+        href="{{pathFor 'listQuestions' _idList=0}}">play!</a>
+      <a class='NavBar-item u-navSpacingLeft'
+        href="{{pathFor 'about'}}">about</a>
+    </div>
   </div>
   {{! A staticly positioned NavBar so that the real NavBar 
       doesn't cover up the content }}

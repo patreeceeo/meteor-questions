@@ -1,16 +1,16 @@
 
-<template name='questionPosed'>
-  <div class='QuestionTable u-fillViewport'>
-    <div class="u-narrow u-pageMargin u-inlineBlock">
+<template name="questionPosed">
+  <div class="QuestionTable u-fillViewport">
+    <div class="u-narrow u-pageMargin u-inlineBlock u-sizeFitViewport">
       {{#if question}}
         <p>
-          <button class='Button--secondary js-prev'>Prev</button>
-          <a class='Button--secondary js-more'
-            href='{{pathFor "listQuestions" _idList=0}}'>More</a>
-          <button class='Button--secondary js-next'>Next</button>
+          <button class="Button--secondary js-prev">Prev</button>
+          <a class="Button--secondary js-more"
+            href="{{pathFor "listQuestions" _idList=0}}">More</a>
+          <button class="Button--secondary js-next">Next</button>
         </p>
         <p>
-          <div class='QuestionCard'>
+          <div class="QuestionCard">
             <p>{{question}}</p>
             {{#if answer}}
               {{#each otherAnswers}}
