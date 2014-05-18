@@ -1,5 +1,7 @@
 <template name="loginButtons">
-  <div id="login-buttons" class='UserAccountMenu u-pullRight'>
+  <a class='UserAccountMenu u-pullRight'
+    href="{{pathFor 'profile' _idUser=userId}}"
+    >
     {{#if currentUser}}
       {{#if loggingIn}}
         {{! We aren't actually logged in yet; we're just setting Meteor.userId
@@ -17,7 +19,7 @@
     {{else}}
       {{> _loginButtonsLoggedOut}}
     {{/if}}
-  </div>
+  </a>
 </template>
 
 <template name="_loginButtonsLoggedIn">
@@ -106,7 +108,10 @@
       {{greeting}} {{displayName}}
     </span>
     <img src='{{profilePicture}}' class='UserAccountMenu-profilePicture'>
-    <div class="Button--secondary u-inlineBlock" id="login-buttons-logout">Sign Out</div>
   </div>
+</template>
+
+<template name="logoutButton">
+  <button class="Button--secondary u-inlineBlock js-logout">Sign Out</button>
 </template>
 

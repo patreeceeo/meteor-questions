@@ -16,8 +16,6 @@ rounded-corners(radius)
 .QuestionCard
   rounded-corners(5px)
   display: block
-  text-decoration: none
-  color: inherit
   background: Ivory
   padding: .75rem
   position: relative
@@ -33,8 +31,6 @@ rounded-corners(radius)
     max-width: 100%
 
 .QuestionCard:hover
-  text-decoration: none
-  color: inherit
   .QuestionCard-answerButton
     display: block
 
@@ -55,11 +51,16 @@ rounded-corners(radius)
   height: 100%
 
 .UserAccountMenu
+  height = 2rem
+  height: height
+  line-height: height
+  display: inline-block
+  vertical-align: middle
   .UserAccountMenu-profilePicture
-    size = 2rem
+    size = height
     rounded-corners(size/2)
-    margin: 0 .5rem 0 0.5rem
+    vertical-align: middle
+    margin: 0 0 0 0.5rem
     height: size
     width: size
-    float: left
 

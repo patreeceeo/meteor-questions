@@ -11,6 +11,10 @@ App.routes =
     path: '/about'
     template: 'about'
     layoutTemplate: 'layout'
+  profile:
+    path: '/user/:_idUser/profile'
+    template: 'profile'
+    layoutTemplate: 'layout'
   listQuestions:
     path: 'list/:_idList'
     template: 'listQuestions'

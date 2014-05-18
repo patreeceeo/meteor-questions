@@ -1,10 +1,8 @@
 loginButtonsSession = Accounts._loginButtonsSession
 
-# shared between dropdown and single mode
-Template.loginButtons.events
-  'click #login-buttons-logout': ->
-    Meteor.logout ->
-      loginButtonsSession.closeDropdown()
+Template.loginButtons.helpers
+  userId: ->
+    Meteor.userId()
 
 #
 # loginButtonLoggedOut template
@@ -111,3 +109,6 @@ Template._loginButtonsLoggedOutSingleLoginButton.configured = ->
   !!ServiceConfiguration.configurations.findOne service: @name
 
 
+Template.logoutButton.events
+  'click button.js-logout': ->
+    Meteor.logout ->
