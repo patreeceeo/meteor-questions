@@ -86,9 +86,9 @@
          id="login-buttons-{{name}}">
       <div class="login-image" id="login-buttons-image-{{name}}"></div>
       {{#if configured}}
-        <span class="text-besides-image sign-in-text-{{name}}">Sign in with {{capitalizedName}}</span>
+        <button class="Button--primary">Sign in with Facebook</button>
       {{else}}
-        <span class="text-besides-image configure-text-{{name}}">Configure {{capitalizedName}} Login</span>
+        <button class="Button--primary">Configure Login</button>
       {{/if}}
     </div>
   </div>
@@ -106,7 +106,7 @@
       {{greeting}} {{displayName}}
     </span>
     <img src='{{profilePicture}}' class='UserAccountMenu-profilePicture'>
-    <div class="Button--secondary u-inlineBlock" id="login-buttons-logout">Log Out</div>
+    <div class="Button--secondary u-inlineBlock" id="login-buttons-logout">Sign Out</div>
   </div>
 </template>
 
