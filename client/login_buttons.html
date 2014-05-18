@@ -1,25 +1,21 @@
 <template name="loginButtons">
-  <a class='UserAccountMenu u-pullRight'
-    href="{{pathFor 'profile' _idUser=userId}}"
-    >
-    {{#if currentUser}}
-      {{#if loggingIn}}
-        {{! We aren't actually logged in yet; we're just setting Meteor.userId
-            optimistically during an at-startup login-with-token. We expose this
-            state so other UIs can treat it specially, but we'll just treat it
-            as logged out. }}
-        {{#if dropdown}}
-          {{> _loginButtonsLoggingIn }}
-        {{else}}
-          {{> _loginButtonsLoggingInSingleLoginButton }}
-        {{/if}}
+  {{#if currentUser}}
+    {{#if loggingIn}}
+      {{! We aren't actually logged in yet; we're just setting Meteor.userId
+          optimistically during an at-startup login-with-token. We expose this
+          state so other UIs can treat it specially, but we'll just treat it
+          as logged out. }}
+      {{#if dropdown}}
+        {{> _loginButtonsLoggingIn }}
       {{else}}
-        {{> _loginButtonsLoggedIn}}
+        {{> _loginButtonsLoggingInSingleLoginButton }}
       {{/if}}
     {{else}}
-      {{> _loginButtonsLoggedOut}}
+      {{> _loginButtonsLoggedIn}}
     {{/if}}
-  </a>
+  {{else}}
+    {{> _loginButtonsLoggedOut}}
+  {{/if}}
 </template>
 
 <template name="_loginButtonsLoggedIn">
@@ -107,7 +103,7 @@
     <span class="login-display-name">
       {{greeting}} {{displayName}}
     </span>
-    <img src='{{profilePicture}}' class='UserAccountMenu-profilePicture'>
+    <img src='{{profilePicture}}' class="NavBar-item-profilePicture u-navSpacingLeft">
   </div>
 </template>
 

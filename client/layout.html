@@ -1,6 +1,14 @@
 <template name='layout'>
-  <div class='u-cf'>
-    {{> loginButtons}}
+  <div class='NavBar u-cf'>
+    <a class='NavBar-item'
+      href="{{pathFor 'index'}}">GoSophie</a>
+    <a class='NavBar-item u-navSpacingLeft'
+      href="{{pathFor 'about'}}">about</a>
+    <a class='NavBar-item u-pullRight'
+      href="{{pathFor 'profile' _idUser=userId}}"
+      >
+      {{> loginButtons}}
+    </a>
   </div>
   {{> yield}}
 </template>

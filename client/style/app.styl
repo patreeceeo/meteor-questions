@@ -44,23 +44,28 @@ rounded-corners(radius)
 .u-pageMargin
   margin: 1rem
 
+.u-navSpacingLeft
+  margin-left: 0.5rem
+
 /* This depends on BODY and HTML having a height of 100% */
 .u-fillViewport
   display: block
   position: relative
   height: 100%
 
-.UserAccountMenu
+.NavBar
   height = 2rem
   height: height
   line-height: height
-  display: inline-block
-  vertical-align: middle
-  .UserAccountMenu-profilePicture
+
+  .NavBar-item
+    vertical-align: middle
+    display: inline-block
+
+  .NavBar-item-profilePicture
     size = height
     rounded-corners(size/2)
     vertical-align: middle
-    margin: 0 0 0 0.5rem
-    height: size
+    vertical-align: middle
     width: size
 
