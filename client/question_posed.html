@@ -21,10 +21,18 @@
                 <button class='Button--secondary js-reset u-pullRight'>Reset</button>
               </div>
             {{else}}
-              <p><textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea></p>
+              {{#if userId}}
+              <p>
+                <textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea>
+              </p>
               <div class='u-cf'>
                 <button class='Button--primary js-answer u-pullRight'>Answer</button>
               </div>
+              {{else}}
+              <p>
+                <textarea class='QuestionCard-answerInput' disabled>You must sign in first.</textarea>
+              </p>
+              {{/if}}
             {{/if}}
 
           </div>

@@ -36,6 +36,9 @@ class App.QuestionPosedView extends ReactiveView
     question: ->
       @model.get 'question'
 
+    userId: ->
+      Meteor.userId()
+
     answerPlaceholder: ->
       [
         'Get it all out'

@@ -79,7 +79,7 @@ Template._loginButtonsLoggingInPadding.dropdown = Accounts.ui.dropdown
 loginButtonsSession = Accounts._loginButtonsSession
 
 Template._loginButtonsLoggedOutSingleLoginButton.events
-  'click .login-button': ->
+  'click .js-login-button': ->
     serviceName = @name
     loginButtonsSession.resetMessages()
     callback = (err) ->
