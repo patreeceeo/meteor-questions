@@ -1,5 +1,6 @@
 
 <template name="questionPosed">
+  {{! TODO: refactor this into multiple templates }}
   <div class="QuestionTable u-fillViewport">
     <div class="u-narrow u-pageMargin u-inlineBlock u-sizeFitViewport">
       {{#if question}}
@@ -14,9 +15,9 @@
             <p>{{question}}</p>
             {{#if answer}}
               {{#each otherAnswers}}
-                <p>{{this.answer}}</p>
+              <p class='Answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{this.answer}}</p>
               {{/each}}
-              <p>{{answer}}</p>
+              <p class='Answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{answer}}</p>
               <div class='u-cf'>
                 <button class='Button--secondary js-reset u-pullRight'>Reset</button>
               </div>

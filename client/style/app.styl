@@ -30,6 +30,9 @@ rounded-corners(radius)
   .QuestionCard-answerButton
     display: block
 
+// TODO: not a good idea to put padding in a component class
+.Answer
+  margin-bottom: 1.75rem
 
 .u-gridColumnWidth
   /* See ListQuestionsView::columnWidth */
@@ -67,13 +70,15 @@ rounded-corners(radius)
     vertical-align: middle
     display: inline-block
 
-  .NavBar-item-profilePicture
-    size = height
-    rounded-corners(size/2)
-    vertical-align: middle
-    width: size
-    // For some reason it's off by a pixel otherwise
-    margin-top: -1px
+.ProfilePicture--small
+  size = 2.25rem
+  rounded-corners(size/2)
+  vertical-align: middle
+  width: size
+  height: size
+  // For some reason it's off by a pixel otherwise
+  position: relative
+  top: -1px
 
 .Link
   &:hover

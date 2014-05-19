@@ -49,6 +49,8 @@ class App.QuestionPosedView extends ReactiveView
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
+    profilePicture: Accounts.ui.profilePicture
+
 
 
       
