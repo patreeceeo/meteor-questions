@@ -4,19 +4,20 @@
 # then automatically be made helpers of a view using the 
 # corresponding model.
 
+class Thenable
+  constructor: (resolver) ->
+    resolver(@_resolve, @_reject)
+  then: (@_succeed, @_fail) ->
+  _resolve: (val) ->
+    @_succeed?(val)
+  _reject: (val) ->
+    @_fail?(val)
+
+unless this.Promise?
+  this.Promise = Thenable
 
 class ReactiveModel
 
-  class Thenable
-    constructor: (resolver) ->
-      resolver(@_resolve, @_reject)
-    then: (@_succeed, @_fail) ->
-    _resolve: (val) ->
-      @_succeed?(val)
-    _reject: (val) ->
-      @_fail?(val)
-
-  this.Promise ?= Thenable
 
   ### Public ###
 

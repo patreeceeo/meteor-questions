@@ -7,12 +7,13 @@ class App.QuestionPosedView extends ReactiveView
     resetButton: 'button.js-reset'
     prevButton: 'button.js-prev'
     nextButton: 'button.js-next'
-  events:
-    'click answerButton': (event) ->
-      answer = @$els.answerInput.val()
+  submitAnswer: (event) ->
+    answer = @$els.answerInput.val()
 
-      @config.aModel.inset
-        answer: answer
+    @config.aModel.inset
+      answer: answer
+  events:
+    'click answerButton': 'submitAnswer'
 
     'click resetButton': (event) ->
       @config.aModel.remove()
