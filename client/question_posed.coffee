@@ -49,12 +49,10 @@ class App.QuestionPosedView extends ReactiveView
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
-  initialize: ->
 
 
       
 
-Meteor.startup ->
 
 
 
