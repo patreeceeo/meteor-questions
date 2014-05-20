@@ -48,6 +48,7 @@ class ReactiveView
   # config - an {Object} which may contain any of the extension 
   #          points documented in the {ReactiveView} overview
   constructor: (@config = {}) ->
+    @template ?= @_getConfig('template')
     @template.isRendered ?= false
     @template.destroyed = 
       @_getConfig('destroyed', (->), callback: true)

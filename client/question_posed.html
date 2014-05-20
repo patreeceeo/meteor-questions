@@ -20,7 +20,7 @@
               {{#each otherAnswers}}
                 {{> questionPosed_answer answer=this.answer}}
               {{/each}}
-              <p class='Answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{answer}}</p>
+              {{> questionPosed_answer answer=answer}}
               <div class='u-cf'>
                 <button class='Button--secondary js-reset u-pullRight'>Reset</button>
               </div>

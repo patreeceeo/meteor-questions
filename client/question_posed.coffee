@@ -40,6 +40,8 @@ class App.QuestionPosedView extends ReactiveView
     userId: ->
       Meteor.userId()
 
+    profilePicture: Accounts.ui.profilePicture
+
     answerPlaceholder: ->
       [
         'Get it all out'
@@ -49,18 +51,17 @@ class App.QuestionPosedView extends ReactiveView
         'Lay it on me'
       ][Math.floor(Math.random() * 5)]
 
+  initialize: ->
+    @answerView = new ReactiveView
+      template: Template.questionPosed_answer
+      helpers:
+        userId: @helpers.userId
+        profilePicture: @helpers.profilePicture
 
 
 
       
 
-class App.QuestionPosedViewAnswer extends ReactiveView
-  template: Template.questionPosed_answer
-  helpers:
-    profilePicture: Accounts.ui.profilePicture
-    userId: ->
-      debugger
-      Meteor.userId()
 
 
 

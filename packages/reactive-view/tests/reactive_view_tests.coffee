@@ -192,4 +192,4 @@ if Meteor.isClient
       model: model
 
     test.equal view.model, model, "should make its model easy to access"
-  
+
