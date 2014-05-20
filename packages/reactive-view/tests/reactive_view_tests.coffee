@@ -18,13 +18,21 @@ xTinytest =
 if Meteor.isClient
 
   Template.__define__ 'listKimchis', -> [
-    HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
+    Spacebars.TemplateWith (=>
+      {title: Spacebars.call(@lookup("title"))}
+    ), UI.block =>
+      Spacebars.include @lookupTemplate "listKimchis_title"
     HTML.Raw("<p>#{Spacebars.mustache @lookup 'description'}</p>")
     HTML.UL(
       UI.Each @lookup('kimchis'), UI.block ->
         [HTML.Raw "<li>#{Spacebars.mustache @lookup 'name'}</li>"]
     )
   ]
+
+  Template.__define__ 'listKimchis_title', -> 
+    [
+      HTML.Raw("<h1>#{Spacebars.mustache @lookup 'title'}</h1>")
+    ]
     
   class KimchiView extends ReactiveView
     template: Template.listKimchis
@@ -73,11 +81,10 @@ if Meteor.isClient
 
     test.equal 'hello', view1._getConfig('callMe', '', callback: true)()
 
-    test.isNull(view1._getConfig 'inconceivable', 
-        null, 
-        optional: true
+    test.isNull view1._getConfig('inconceivable', 
+        null, optional: true
+      ),
       "should allow null values if optional flag set"
-    )
 
   # There's currently no way to unbind event handlers once bound to
   # a template, so this test causes a subsequent test involving

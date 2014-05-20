@@ -92,20 +92,17 @@ class ReactiveView
   _getConfig: (
     name, 
     defaultValue, 
-    {
-      callback: isCallback 
-      optional: isOptional
-    } = {}
+    { callback, optional } = {}
   ) ->
     error = Error "ReactiveView wants a(n) #{name}."
     value = 
-      if isCallback
+      if callback
         @config[name] or @[name] or defaultValue
       else
         _.result(@config, name) or 
           _.result(this, name) or 
           defaultValue
-    unless value? or isOptional
+    unless value? or optional
       throw error
     value
 
