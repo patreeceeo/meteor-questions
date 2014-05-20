@@ -25,6 +25,9 @@ rounded-corners(radius)
   .QuestionCard-answerInput
     width: 100%
     max-width: 100%
+  .QuestionCard-answerContainer
+    padding: 0.5rem
+    background: wheat
   .QuestionCard-answer
     margin-bottom: 1.75rem
 
@@ -69,15 +72,25 @@ rounded-corners(radius)
     vertical-align: middle
     display: inline-block
 
-.ProfilePicture--small
-  size = 2.25rem
-  rounded-corners(size/2)
+.ProfilePicture
   vertical-align: middle
-  width: size
-  height: size
   // For some reason it's off by a pixel otherwise
   position: relative
   top: -1px
+
+.ProfilePicture--small
+  @extend .ProfilePicture
+  size = 2.25rem
+  rounded-corners(size/2)
+  width: size
+  height: size
+
+.ProfilePicture--medium
+  @extend .ProfilePicture
+  size = 4.5rem
+  rounded-corners(2.25rem/2)
+  width: size
+  height: size
 
 .Link
   &:hover

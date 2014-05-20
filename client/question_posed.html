@@ -1,15 +1,17 @@
 <template name="questionPosed_answer">
-  <p class='QuestionCard-answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{answer}}</p>
+  <p class='QuestionCard-answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--medium u-pullRight" src="{{profilePicture}}"></a>&ldquo;{{answer}}&rdquo;</p>
 </template>
 
 <template name="questionPosed_card">
   <div class="QuestionCard">
     <p>{{question}}</p>
     {{#if answer}}
-      {{#each otherAnswers}}
-        {{> questionPosed_answer answer=this.answer}}
-      {{/each}}
-      {{> questionPosed_answer answer=answer}}
+      <div class="QuestionCard-answerContainer">
+        {{#each otherAnswers}}
+          {{> questionPosed_answer answer=this.answer}}
+        {{/each}}
+        {{> questionPosed_answer answer=answer}}
+      </div>
       <div class='u-cf'>
         <button class='Button--secondary js-reset u-pullRight'>Reset</button>
       </div>

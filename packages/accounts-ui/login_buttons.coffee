@@ -22,7 +22,7 @@ Accounts.ui.profilePicture = (userId = Meteor.userId()) ->
   user = Meteor.users.findOne(userId)
   if user?.services?
     id = user.services.facebook.id
-    "http://graph.facebook.com/#{id}/picture/?type=small"
+    "http://graph.facebook.com/#{id}/picture/?type=large"
   else
     ""
 
