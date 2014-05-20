@@ -1,45 +1,48 @@
 <template name="questionPosed_answer">
-  <p class='Answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{answer}}</p>
+  <p class='QuestionCard-answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}"></a>{{answer}}</p>
+</template>
+
+<template name="questionPosed_card">
+  <div class="QuestionCard">
+    <p>{{question}}</p>
+    {{#if answer}}
+      {{#each otherAnswers}}
+        {{> questionPosed_answer answer=this.answer}}
+      {{/each}}
+      {{> questionPosed_answer answer=answer}}
+      <div class='u-cf'>
+        <button class='Button--secondary js-reset u-pullRight'>Reset</button>
+      </div>
+    {{else}}
+      {{#if userId}}
+      <p>
+        <textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea>
+      </p>
+      <div class='u-cf'>
+        <button class='Button--primary js-answer u-pullRight'>Answer</button>
+      </div>
+      {{else}}
+      <p>
+        <textarea class='QuestionCard-answerInput' disabled>You must sign in first.</textarea>
+      </p>
+      {{/if}}
+    {{/if}}
+
+  </div>
 </template>
 
 <template name="questionPosed">
-  {{! TODO: refactor this into multiple templates }}
   <div class="QuestionTable u-fillViewport">
     <div class="u-narrow u-pageMargin u-inlineBlock u-sizeFitViewport">
       {{#if question}}
         <p>
           <button class="Button--secondary js-prev">Prev</button>
           <a class="Button--secondary js-more"
-            href="{{pathFor "listQuestions" _idList=0}}">More</a>
+            href="{{pathFor 'listQuestions' _idList=0}}">More</a>
           <button class="Button--secondary js-next">Next</button>
         </p>
         <p>
-          <div class="QuestionCard">
-            <p>{{question}}</p>
-            {{#if answer}}
-              {{#each otherAnswers}}
-                {{> questionPosed_answer answer=this.answer}}
-              {{/each}}
-              {{> questionPosed_answer answer=answer}}
-              <div class='u-cf'>
-                <button class='Button--secondary js-reset u-pullRight'>Reset</button>
-              </div>
-            {{else}}
-              {{#if userId}}
-              <p>
-                <textarea class='js-answer QuestionCard-answerInput' placeholder="{{answerPlaceholder}}"></textarea>
-              </p>
-              <div class='u-cf'>
-                <button class='Button--primary js-answer u-pullRight'>Answer</button>
-              </div>
-              {{else}}
-              <p>
-                <textarea class='QuestionCard-answerInput' disabled>You must sign in first.</textarea>
-              </p>
-              {{/if}}
-            {{/if}}
-
-          </div>
+          {{> questionPosed_card }}
         </p>
       {{else}}
         The End!

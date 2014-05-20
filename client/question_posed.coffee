@@ -2,22 +2,12 @@
 class App.QuestionPosedView extends ReactiveView
   template: Template.questionPosed
   els:
-    answerInput: 'textarea.js-answer'
-    answerButton: 'button.js-answer'
-    resetButton: 'button.js-reset'
     prevButton: 'button.js-prev'
     nextButton: 'button.js-next'
-  submitAnswer: (event) ->
-    answer = @$els.answerInput.val()
-
-    @config.aModel.inset
-      answer: answer
+  helpers: ->
+    question: ->
+      @model.get 'question'
   events:
-    'click answerButton': 'submitAnswer'
-
-    'click resetButton': (event) ->
-      @config.aModel.remove()
-
     'click nextButton': (event) ->
       nQuestions = App.QuestionCollection.find().count()
       Router.go 'questionPosed',
@@ -26,37 +16,56 @@ class App.QuestionPosedView extends ReactiveView
     'click prevButton': (event) ->
       Router.go 'questionPosed',
         _idQuestion: Math.max 0, parseInt(@model.get('_id')) - 1
-
-  helpers:
-    answer: ->
-      @config.aModel.get 'answer'
-
-    otherAnswers: ->
-      @config.aModel.otherAnswers()
-
-    question: ->
-      @model.get 'question'
-
-    userId: ->
-      Meteor.userId()
-
-    profilePicture: Accounts.ui.profilePicture
-
-    answerPlaceholder: ->
-      [
-        'Get it all out'
-        'Tell me how you REALLY feel'
-        'What says you?'
-        'How `bout that'
-        'Lay it on me'
-      ][Math.floor(Math.random() * 5)]
-
   initialize: ->
     @answerView = new ReactiveView
       template: Template.questionPosed_answer
       helpers:
-        userId: @helpers.userId
-        profilePicture: @helpers.profilePicture
+        userId: ->
+          Meteor.userId()
+        profilePicture: Accounts.ui.profilePicture
+
+    @cardView = new ReactiveView
+      template: Template.questionPosed_card
+      model: @model
+      aModel: @config.aModel
+      els:
+        answerInput: 'textarea.js-answer'
+        answerButton: 'button.js-answer'
+        resetButton: 'button.js-reset'
+      helpers:
+        answer: ->
+          @config.aModel.get 'answer'
+
+        otherAnswers: ->
+          @config.aModel.otherAnswers()
+
+        question: ->
+          @model.get 'question'
+
+        userId: ->
+          Meteor.userId()
+
+        profilePicture: Accounts.ui.profilePicture
+
+        answerPlaceholder: ->
+          [
+            'Get it all out'
+            'Tell me how you REALLY feel'
+            'What says you?'
+            'How `bout that'
+            'Lay it on me'
+          ][Math.floor(Math.random() * 5)]
+      submitAnswer: (event) ->
+        answer = @$els.answerInput.val()
+
+        @config.aModel.inset
+          answer: answer
+      events:
+        'click answerButton': 'submitAnswer'
+
+        'click resetButton': (event) ->
+          @config.aModel.remove()
+
 
 
 
