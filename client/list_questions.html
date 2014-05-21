@@ -5,7 +5,18 @@
       <a class="QuestionCard u-gridColumnMargin"
         href="{{pathFor 'questionPosed' _idQuestion=_id}}">
         {{question}}
-        <button class="QuestionCard-answerButton Button--primary">answer!</button>
+        <div class="u-cf">
+          <button class="QuestionCard-answerButton Button--primary u-pullRight">{{#if getLength answerers}}join the club!{{else}}be first!{{/if}}</button>
+          <div class="QuestionCard-answerers">
+            {{#each answerers}}
+            <a href="{{pathFor 'profile' _idUser=_idUser}}">
+              <img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}">
+            </a>
+            {{else}}
+            <span class="u-pullRight u-alignMiddle">No answers yet.</span>
+            {{/each}}
+          </div>
+        </div>
       </a>
     </div>
     {{/each}}

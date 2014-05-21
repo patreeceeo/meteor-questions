@@ -11,7 +11,14 @@ class App.ListQuestionsView extends ReactiveView
 
   columnWidth: '24rem'
 
+  getAnswerer: (doc) ->
+    _idUser: doc._idUser
+    profilePicture: Accounts.ui.profilePicture(doc._idUser)
+
   helpers:
+    answerers: (context) ->
+      App.AnswerCollection.find _idQuestion: context._id,
+        {transform: @getAnswerer}
     questions: ->
       cursor = App.QuestionCollection.find()
       if cursor.count() > 0

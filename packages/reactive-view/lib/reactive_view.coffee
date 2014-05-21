@@ -111,9 +111,9 @@ class ReactiveView
     boundHelpers = {}
     for own key, helper of @_getConfig('helpers', {})
       view = this
-      boundHelpers[key] = _.wrap helper, (helper) =>
-        @viewHelper()
-        helper.call(this)
+      boundHelpers[key] = _.wrap helper, (helper, args...) ->
+        view.viewHelper()
+        helper.call(view, this, args...)
 
     @template.helpers boundHelpers
 

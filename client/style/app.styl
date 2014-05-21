@@ -19,10 +19,10 @@ rounded-corners(radius)
   .QuestionCard-answerButton
     color: white
     display: none
-    position: absolute
-    right: .5em
-    bottom: .5em
-    z-index: 1
+  .QuestionCard-answerers
+    display: block
+    line-height: 2rem
+    height: 2rem
   .QuestionCard-answerInput
     width: 100%
     max-width: 100%
@@ -35,6 +35,8 @@ rounded-corners(radius)
 .QuestionCard:hover
   .QuestionCard-answerButton
     display: block
+  .QuestionCard-answerers
+    display: none
 
 
 .u-gridColumnWidth
@@ -81,7 +83,7 @@ rounded-corners(radius)
 
 .ProfilePicture--small
   @extend .ProfilePicture
-  size = 2.25rem
+  size = 2rem
   rounded-corners(size/2)
   width: size
   height: size

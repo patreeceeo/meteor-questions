@@ -61,7 +61,8 @@ class App.QuestionPosedView extends ReactiveView
       helpers:
         userId: ->
           Meteor.userId()
-        profilePicture: Accounts.ui.profilePicture
+        profilePicture: (context) ->
+          Accounts.ui.profilePicture context._idUser
 
     @cardView = new CardView
       model: @model
