@@ -24,7 +24,7 @@ Accounts.ui.profilePicture = (userId = Meteor.userId()) ->
     id = user.services.facebook.id
     "http://graph.facebook.com/#{id}/picture/?type=large"
   else
-    ""
+    "/Angry-Computer-Geek.jpg"
 
 
 # returns an array of the login services used by this app. each

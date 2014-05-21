@@ -15,10 +15,17 @@ class App.ListQuestionsView extends ReactiveView
     _idUser: doc._idUser
     profilePicture: Accounts.ui.profilePicture(doc._idUser)
 
+  answerCount: (_idQuestion, options = {}) ->
+    App.AnswerCollection.find _idQuestion: _idQuestion, options
+      .count()
+
   helpers:
     answerers: (context) ->
       App.AnswerCollection.find _idQuestion: context._id,
-        {transform: @getAnswerer}
+        { transform: @getAnswerer, limit: 5 }
+    answerCount: (context) ->
+      @answerCount context._id
+
     questions: ->
       cursor = App.QuestionCollection.find()
       if cursor.count() > 0
@@ -35,3 +42,19 @@ class App.ListQuestionsView extends ReactiveView
               itemSelector: '.js-question'
 
       cursor
+  initialize: ->
+    @_added ?= {}
+    App.AnswerCollection.find().observe
+      added: (doc) =>
+        $el = @$("[data-id=#{doc._idQuestion}]")
+        $el.addClass "u-flashIn"
+        _.defer ->
+          $el.addClass "u-flashOut"
+        _.delay (->
+          $el.removeClass "u-flashIn"
+        ), 500
+        _.delay (->
+          $el.removeClass "u-flashIn u-flashOut"
+        ), 2000
+
+

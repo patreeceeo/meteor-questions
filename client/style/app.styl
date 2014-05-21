@@ -6,6 +6,12 @@ rounded-corners(radius)
   border-radius: radius /* future proofing */
   -khtml-border-radius: radius /* for old Konqueror browsers */
 
+transition-background-color(duration)
+  -webkit-transition: background-color duration
+  -webkit-transition-timing-function: easeOutCirc
+  transition: background-color duration
+  transition-timing-function: easeOutCirc
+
 .QuestionTable
   background: #333
 
@@ -13,9 +19,10 @@ rounded-corners(radius)
   corner-radius = .2rem
   rounded-corners(corner-radius)
   display: block
-  background: Ivory
+  background: PapayaWhip
   padding: .75rem
   position: relative
+  color: DarkSlateGray
   .QuestionCard-answerButton
     color: white
     display: none
@@ -32,12 +39,17 @@ rounded-corners(radius)
   .QuestionCard-answer
     margin-bottom: 1.75rem
 
-.QuestionCard:hover
-  .QuestionCard-answerButton
-    display: block
-  .QuestionCard-answerers
-    display: none
+  &:hover
+    .QuestionCard-answerButton
+      display: block
+    .QuestionCard-answerers
+      display: none
 
+  &.u-flashIn
+    background-color: white
+    color: black
+  &.u-flashOut
+    transition-background-color(1.5s)
 
 .u-gridColumnWidth
   /* See ListQuestionsView::columnWidth */
