@@ -42,7 +42,7 @@ class App.ListQuestionsView extends ReactiveView
               itemSelector: '.js-question'
 
       cursor
-  initialize: ->
+  rendered: ->
     @_added ?= {}
     App.AnswerCollection.find().observe
       added: (doc) =>

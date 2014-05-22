@@ -8,7 +8,7 @@
     {{#if answer}}
       <div class="QuestionCard-answerContainer">
         {{#each otherAnswers}}
-          {{> questionPosed_answer answer=this.answer}}
+          {{> questionPosed_answer answer=this.answer _idUser=this._idUser}}
         {{/each}}
         {{> questionPosed_answer answer=answer}}
       </div>
@@ -38,10 +38,10 @@
     <div class="u-narrow u-pageMargin u-inlineBlock u-sizeFitViewport">
       {{#if question}}
         <p>
-          <button class="Button--secondary js-prev">Prev</button>
+          <a class="Button--secondary js-prev">Prev</a>
           <a class="Button--secondary js-more"
             href="{{pathFor 'listQuestions' _idList=0}}">More</a>
-          <button class="Button--secondary js-next">Next</button>
+          <a class="Button--secondary js-next">Next</a>
         </p>
         <p>
           {{> questionPosed_card }}

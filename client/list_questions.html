@@ -5,7 +5,7 @@
       <a class="QuestionCard u-gridColumnMargin"
         data-id="{{_id}}"
         href="{{pathFor 'questionPosed' _idQuestion=_id}}">
-        {{question}}
+        <p>{{question}}</p>
         <div class="u-cf">
           <button class="QuestionCard-answerButton Button--primary u-pullRight">{{#if answerCount}}join in!{{else}}be first!{{/if}}</button>
           <div class="QuestionCard-answerers">

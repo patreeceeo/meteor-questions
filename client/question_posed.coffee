@@ -41,8 +41,8 @@ class CardView extends ReactiveView
 class App.QuestionPosedView extends ReactiveView
   template: Template.questionPosed
   els:
-    prevButton: 'button.js-prev'
-    nextButton: 'button.js-next'
+    prevButton: '.js-prev'
+    nextButton: '.js-next'
   helpers: ->
     question: ->
       @model.get 'question'
