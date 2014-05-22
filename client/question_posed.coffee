@@ -17,8 +17,6 @@ class CardView extends ReactiveView
     userId: ->
       Meteor.userId()
 
-    profilePicture: Accounts.ui.profilePicture
-
     answerPlaceholder: ->
       [
         'Get it all out'
@@ -59,8 +57,6 @@ class App.QuestionPosedView extends ReactiveView
     @answerView = new ReactiveView
       template: Template.questionPosed_answer
       helpers:
-        userId: ->
-          Meteor.userId()
         profilePicture: (context) ->
           Accounts.ui.profilePicture context._idUser
 

@@ -32,3 +32,6 @@ Meteor.startup ->
       App.QuestionCollection.find().count() is 0
     App.bootstrap()
 
+
+class App.UserModel extends ReactiveModel
+  collection: Meteor.users

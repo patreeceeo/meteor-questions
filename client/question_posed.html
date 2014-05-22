@@ -1,5 +1,5 @@
 <template name="questionPosed_answer">
-  <p class='QuestionCard-answer u-cf'><a href="{{pathFor 'profile' _idUser=userId}}"><img class="ProfilePicture--medium u-pullRight" src="{{profilePicture}}"></a>&ldquo;{{answer}}&rdquo;</p>
+  <p class='QuestionCard-answer u-cf'><a href="{{pathFor 'profile' _idUser=_idUser}}"><img class="ProfilePicture--medium u-pullRight" src="{{profilePicture}}"></a>&ldquo;{{answer}}&rdquo;</p>
 </template>
 
 <template name="questionPosed_card">
@@ -10,7 +10,7 @@
         {{#each otherAnswers}}
           {{> questionPosed_answer answer=this.answer _idUser=this._idUser}}
         {{/each}}
-        {{> questionPosed_answer answer=answer}}
+        {{> questionPosed_answer answer=answer _idUser=userId}}
       </div>
       <div class='u-cf'>
         <button class='Button--secondary js-reset u-pullRight'>Reset</button>

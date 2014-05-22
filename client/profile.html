@@ -1,4 +1,11 @@
 
 <template name='profile'>
-  {{> logoutButton}}
+  <div class="ProfilePicture--large u-posAbsoluteCenter"
+    style="text-align: center">
+    <h2>{{displayName}}</h2>
+    <img class="ProfilePicture--large" src="{{profilePicture}}">
+    {{#if $eq _idUser $.Meteor.userId}}
+      {{> logoutButton}}
+    {{/if}}
+  </div>
 </template>

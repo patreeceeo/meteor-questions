@@ -24,7 +24,6 @@ transition-background-color(duration)
   position: relative
   color: DarkSlateGray
   .QuestionCard-answerButton
-    color: white
     display: none
   .QuestionCard-answerers
     display: block
@@ -106,6 +105,13 @@ transition-background-color(duration)
   @extend .ProfilePicture
   size = 4.5rem
   rounded-corners(2.25rem/2)
+  width: size
+  height: size
+
+.ProfilePicture--large
+  @extend .ProfilePicture
+  size = 11rem
+  rounded-corners(11rem/2)
   width: size
   height: size
 

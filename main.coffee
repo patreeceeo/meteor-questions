@@ -3,6 +3,7 @@ this.App ?= {}
 
 App.qModel = qModel = new App.QuestionModel
 App.aModel = aModel = new App.AnswerModel
+App.uModel = uModel = new App.UserModel
 
 if Meteor.isServer
   # Need to publish 'services' field to 'userData' because it
@@ -18,6 +19,9 @@ if Meteor.isClient
     aModel: aModel
 
   App.lqView = new App.ListQuestionsView
+
+  App.pView = new App.ProfileView
+    model: uModel
 
 Router.waitOn ->
   Meteor.subscribe 'userData'

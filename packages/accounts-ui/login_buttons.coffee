@@ -10,10 +10,10 @@ UI.registerHelper 'loginButtons', ->
 # helpers
 #
 
-Accounts.ui.displayName = ->
-  user = Meteor.user()
+Accounts.ui.displayName = (userId = Meteor.userId()) ->
+  user = Meteor.users.findOne(userId)
 
-  user?.profile?.name.split(/\s+/)[0] or ''
+  user?.profile?.name.split(/\s+/)[0] or '???'
 
 
 

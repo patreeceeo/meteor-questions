@@ -15,6 +15,9 @@ App.routes =
     path: '/user/:_idUser/profile'
     template: 'profile'
     layoutTemplate: 'layout'
+    waitOn: ->
+      App.uModel.select @params._idUser
+      Meteor.subscribe 'userData', {}
   listQuestions:
     path: 'list/:_idList'
     template: 'listQuestions'

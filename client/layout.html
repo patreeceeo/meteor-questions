@@ -1,7 +1,7 @@
 <template name='layout'>
   <div class='NavBar u-cf u-posFixedTop'>
     <a class='NavBar-item u-pullRight'
-      href="{{pathFor 'profile' _idUser=userId}}"
+      href="{{pathFor 'profile' _idUser=$.Meteor.userId}}"
       >
       {{> loginButtons}}
     </a>

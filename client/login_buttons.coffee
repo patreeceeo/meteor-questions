@@ -39,8 +39,14 @@ Template._loginButtonsLoggedIn.dropdown = Accounts.ui.dropdown
 # loginButtonsLoggedInSingleLogoutButton template
 #
 
-Template._loginButtonsLoggedInSingleLogoutButton.displayName = Accounts.ui.displayName
-Template._loginButtonsLoggedInSingleLogoutButton.profilePicture = Accounts.ui.profilePicture
+Template._loginButtonsLoggedInSingleLogoutButton
+  .displayName = ->
+    Accounts.ui.displayName Meteor.userId()
+
+Template._loginButtonsLoggedInSingleLogoutButton
+  .profilePicture = ->
+    Accounts.ui.profilePicture Meteor.userId()
+
 Template._loginButtonsLoggedInSingleLogoutButton.greeting = ->
   [
     "Hello,"
