@@ -7,7 +7,7 @@
         href="{{pathFor 'questionPosed' _idQuestion=_id}}">
         <p>{{question}}</p>
         <div class="u-cf">
-          <button class="QuestionCard-answerButton Button--primary u-pullRight">{{#if answerCount}}join in!{{else}}be first!{{/if}}</button>
+          <span class="QuestionCard-answerButton Button--primary u-pullRight">{{#if answerCount}}join in!{{else}}be first!{{/if}}</span>
           <div class="QuestionCard-answerers">
             {{#each answerers}}
             <img class="ProfilePicture--small u-pullRight" src="{{profilePicture}}">

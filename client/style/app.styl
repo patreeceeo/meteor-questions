@@ -41,10 +41,11 @@ transition-background-color(duration)
     margin-bottom: 1.75rem
 
   &:hover
-    .QuestionCard-answerButton
-      display: block
-    .QuestionCard-answerers
-      display: none
+    @media only screen and (min-width: 480px)
+      .QuestionCard-answerButton
+        display: block
+      .QuestionCard-answerers
+        display: none
 
   &.u-flashIn
     background-color: white
